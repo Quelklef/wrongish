@@ -65,7 +65,7 @@ patch(Array, $extend, [], function(other) {
 // == Set == //
 
 patch(Set, $map, [], function(mapper) {
-  return new Set([...this].map(mapper));
+  return new Set([...this].map(item => mapper(item)));
 });
 
 patch(Set, $filter, [], function(pred) {

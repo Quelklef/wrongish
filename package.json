@@ -1,8 +1,9 @@
 {
   "name": "wrongish",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A naughty utility library",
   "main": "wrongish.js",
+  "types": "wrongish.d.ts",
   "scripts": {
     "test": "npx mocha wrongish.test.js"
   },
