@@ -1,0 +1,21 @@
+{
+  "name": "wrongish",
+  "version": "0.0.1",
+  "description": "A naughty utility library",
+  "main": "wrongish.js",
+  "scripts": {
+    "test": "npx mocha wrongish.test.js"
+  },
+  "keywords": [
+    "util",
+    "es6"
+  ],
+  "author": "Quelklef",
+  "url": "https://github.com/Quelklef/wrongish",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "expect": "^26.1.0",
+    "mocha": "^8.0.1"
+  }
+}
