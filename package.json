@@ -1,6 +1,6 @@
 {
   "name": "wrongish",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A naughty utility library",
   "main": "wrongish.js",
   "scripts": {

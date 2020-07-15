@@ -41,6 +41,22 @@ const tags = sentence.split(' ')
   [$pipe](tags => new Set(tags));
 ```
 
+### `Object[$to]`
+
+**Aliases**: `$as`
+
+Converts an object of one type to another type.
+
+Supported conversions:
+- `Set` -> `Array`
+- `Array` -> `Set`
+
+```js
+const items = [1, 1, 2, 2, 3, 3];
+const deduplicated = items[$to](Set)[$to](Array);
+console.log(items);  // [1, 2, 3]
+```
+
 ***
 
 ### `Array[$mapfilter]`
@@ -50,7 +66,7 @@ Map by the given function, and then filter out all values equal to `false`.
 ```js
 const words = ['Hey', '@es6', '@tc39', 'quick', 'question'];
 const ats = words[$mapfilter](word => word.startsWith('@') && word.slice(1));
-console.log(ats);  // ['es6', 'tc39'];
+console.log(ats);  // ['es6', 'tc39']
 ```
 
 Falsy values which are not equal to the value `false` are kept.

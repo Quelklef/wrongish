@@ -1,6 +1,8 @@
 
 const ex = module.exports;
 
+const $to        = ex.$to        = ex.to        = Symbol('$to');
+const $as        = ex.$as        = ex.as        = Symbol('$as');
 const $or        = ex.$or        = ex.or        = Symbol('$or');
 const $and       = ex.$and       = ex.and       = Symbol('$and');
 const $map       = ex.$map       = ex.map       = Symbol('$map');
@@ -32,6 +34,20 @@ function patch(type, name, aliases, func) {
 
 patch(Object, $pipe, [], function(func) {
   return func(this);
+});
+
+patch(Object, $to, [$as], function(toType) {
+
+  const fromType = Object.getPrototypeOf(this).constructor;
+
+  if (fromType === Array && toType === Set)
+    return new Set(this);
+
+  if (fromType === Set && toType === Array)
+    return Array.from(this);
+
+  throw Error(`Unknown conversion ${fromType.name} to ${toType.name}.`);
+
 });
 
 

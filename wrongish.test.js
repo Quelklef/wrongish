@@ -4,6 +4,28 @@ const $ = require('./wrongish');
 const expect = require('expect');
 
 describe('wrongish', () => {
+  
+  it('Object[$pipe]', () => {
+    const obj = { x: 2, y: 4 };
+    const result = obj[$.pipe](({ x, y }) => x * y);
+    expect(result).toBe(8);
+  });
+
+  describe('Object[$to]', () => {
+
+    it('Array -> Set', () => {
+      const items = [1, 1, 2, 2, 3, 3];
+      const set = items[$.to](Set);
+      expect(set).toEqual(new Set([1, 2, 3]));
+    });
+    
+    it('Set -> Array', () => {
+      const items = new Set([1, 2, 3]);
+      const array = items[$.to](Array);
+      expect(array).toEqual([1, 2, 3]);
+    });
+    
+  });
 
   it('Array[$mapfilter]', () => {
     const items = [1, 2, 3, 4, 5];
@@ -67,13 +89,6 @@ describe('wrongish', () => {
     const A = new Set([1, 2, 3, 4, 5]);
     expect(A[$.every](x => x > 1)).toBe(false);
     expect(A[$.every](x => x > 0)).toBe(true);
-  });
-  
-
-  it('Object[$pipe]', () => {
-    const obj = { x: 2, y: 4 };
-    const result = obj[$.pipe](({ x, y }) => x * y);
-    expect(result).toBe(8);
   });
   
 });
