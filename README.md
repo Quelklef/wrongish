@@ -22,8 +22,29 @@ However, Wrongish is able to sidestep most of the dangers of extending native pr
 
 # Reference
 
-**Note**: for each extension name `$name` that Wrongish exports, it also exports a name without the dollar sign.
-This way, one can `import * as $ from 'wrongish'`.
+**Note**: names are exported both with and without a dollar sign, and methods are exported both bound and unbound (See below)
+
+```js
+const { pipe } = require('wrongish');
+["hello", "world"][pipe](console.log.bind(console));
+
+// is the same as
+
+const { $pipe } = require('wrongish');
+["hello", "world"][$pipe](console.log.bind(console));
+
+// is the same as
+
+const { unbound: { pipe } } = require('wrongish');
+pipe(["hello", "world"], console.log.bind(console));
+
+// is the same as
+
+const { unbound: { $pipe } } = require('wrongish');
+$pipe(["hello", "world"], console.log.bind(console));
+```
+
+Onto the methods!
 
 ***
 
@@ -60,7 +81,7 @@ const tags = sentence.split(' ')
 
 ### `Object[$to]`
 
-Aliases: `$as` 
+Aliases: '$as' 
 
 
 Type: `Object[$to]<T>(targetConstructor: Function): T`
@@ -81,7 +102,7 @@ console.log(uniq);  // [1, 2, 3]
 
 ### `Set[$every]`
 
-Aliases: `$all` 
+Aliases: '$all' 
 
 
 Type: `Set<T>[$every](pred: (item: T) => boolean): boolean`
@@ -96,7 +117,7 @@ Like `Array$filter`, but for `Set`.
 
 ### `Set[$intersect]`
 
-Aliases: `$and` 
+Aliases: '$and' 
 
 
 Type: `Set<T>[$intersect](other: Set<T>): Set<T>`
@@ -117,7 +138,7 @@ Set subtraction.
 
 ### `Set[$some]`
 
-Aliases: `$any` 
+Aliases: '$any' 
 
 
 Type: `Set<T>[$some](pred: (item: T) => boolean): boolean`
@@ -126,7 +147,7 @@ Like `Array#some`, but for `Set`
 
 ### `Set[$union]`
 
-Aliases: `$or` 
+Aliases: '$or' 
 
 
 Type: `Set<T>[$union](other: Set<T>): Set<T>`

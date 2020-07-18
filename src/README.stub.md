@@ -22,8 +22,29 @@ However, Wrongish is able to sidestep most of the dangers of extending native pr
 
 # Reference
 
-**Note**: for each extension name `$name` that Wrongish exports, it also exports a name without the dollar sign.
-This way, one can `import * as $ from 'wrongish'`.
+**Note**: names are exported both with and without a dollar sign, and methods are exported both bound and unbound (See below)
+
+```js
+const { pipe } = require('wrongish');
+["hello", "world"][pipe](console.log.bind(console));
+
+// is the same as
+
+const { $pipe } = require('wrongish');
+["hello", "world"][$pipe](console.log.bind(console));
+
+// is the same as
+
+const { unbound: { pipe } } = require('wrongish');
+pipe(["hello", "world"], console.log.bind(console));
+
+// is the same as
+
+const { unbound: { $pipe } } = require('wrongish');
+$pipe(["hello", "world"], console.log.bind(console));
+```
+
+Onto the methods!
 
 ***
 

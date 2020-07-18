@@ -34,7 +34,7 @@ sub compile {
 
   # javascript symbol definitions
   for @all_syms -> $sym {
-    @impl_chunks.push("const \$$sym = ex.$sym = ex.\$$sym = Symbol('$sym');");
+    @impl_chunks.push("__symbol('$sym', __ex.$sym = __ex.\$$sym = Symbol('$sym'));");
   }
   @impl_chunks.push("");
 
@@ -49,15 +49,15 @@ sub compile {
     @docn_chunks.push('***') if $host_change;
     @docn_chunks.push("### `%patch<host>\[\$$name]`");
     if %patch<syms>.elems > 1 {
-      my $aliases_str = @aliases.map({ "`\$$_`" }).join(", ");
+      my $aliases_str = @aliases.map({ "'\$$_'" }).join(", ");
       @docn_chunks.push("Aliases: $aliases_str \n");
     }
     @docn_chunks.push("Type: `%patch<host>%patch<hvar>\[\$$name]%patch<type>`");
     @docn_chunks.push(%patch<docn>);
 
     # compile implementation
-    my $syms_as_js = '[' ~ %patch<syms>.map({ "\$$_" }).join(", ") ~ ']';
-    @impl_chunks.push("patch(%patch<host>, $syms_as_js, %patch<impl>)");
+    my $syms_as_js = '[' ~ %patch<syms>.map({ "'$_'" }).join(", ") ~ ']';
+    @impl_chunks.push("__patch(%patch<host>, $syms_as_js, %patch<impl>);");
     @impl_chunks.push("");
 
     # compile typescript bits
