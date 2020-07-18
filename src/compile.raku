@@ -63,7 +63,7 @@ sub compile {
     # compile typescript bits
     @type_chunks.push("") if $host_change;
     for %patch<syms>.Array -> $sym {
-      @type_chunks.push("interface %patch<host>%patch<hvar> \{ [\$$sym]%patch<type>; \}");
+      @type_chunks.push("export interface %patch<host>%patch<hvar> \{ [\$$sym]%patch<type>; \}");
     }
 
     # compile test
