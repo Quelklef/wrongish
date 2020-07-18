@@ -1,6 +1,6 @@
 ::host Set
 ::hvar <T>
-::type <S>(mapper: (item: T) => S): Set<S>
+::type <S>(mapper: (item: T) => S) => Set<S>
 ::syms map
 
 ::docn

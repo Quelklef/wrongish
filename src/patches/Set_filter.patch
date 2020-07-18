@@ -1,6 +1,6 @@
 ::host Set
 ::hvar <T>
-::type (pred: (item: T) => boolean): Set<T>
+::type (pred: (item: T) => boolean) => Set<T>
 ::syms filter
 
 ::docn

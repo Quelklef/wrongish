@@ -1,6 +1,6 @@
 ::host Object
 ::syms pipe
-::type <R>(func: (me: this) => R): R
+::type <R>(func: (me: Object) => R) => R
 
 ::docn
 Pass the object into a function: `obj[$pipe](func)` is the same as `func(object)`.

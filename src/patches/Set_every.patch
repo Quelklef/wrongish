@@ -1,6 +1,6 @@
 ::host Set
 ::hvar <T>
-::type (pred: (item: T) => boolean): boolean
+::type (pred: (item: T) => boolean) => boolean
 ::syms every all
 
 ::docn

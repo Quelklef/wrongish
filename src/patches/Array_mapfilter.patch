@@ -1,6 +1,6 @@
 ::host Array
 ::hvar <T>
-::type <S>(func: (x: T) => false | S): Array<S>
+::type <S>(func: (x: T) => false | S) => Array<S>
 ::syms mapfilter
 
 ::docn

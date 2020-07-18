@@ -5,7 +5,7 @@
   "main": "compiled/wrongish.js",
   "types": "compiled/wrongish.d.ts",
   "scripts": {
-    "build": "cd src && perl6 compile.raku && cd ..",
+    "build": "cd src && perl6 --ll-exception compile.raku && cd ..",
     "test": "npm run build && npx mocha compiled/wrongish.test.js",
     "dev": "nodemon --watch ./src -e raku,md,ts,js,patch -x \"npm run build && node compiled/wrongish.js && npx mocha compiled/wrongish.test.js && tsc compiled/wrongish.d.ts\""
   },

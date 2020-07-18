@@ -1,6 +1,6 @@
 ::host Set
 ::hvar <T>
-::type (other: Set<T>): Set<T>
+::type (other: Set<T>) => Set<T>
 ::syms intersect and
 
 ::docn

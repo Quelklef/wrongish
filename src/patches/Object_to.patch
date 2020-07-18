@@ -1,5 +1,5 @@
 ::host Object
-::type <T>(targetConstructor: Function): T
+::type <T>(targetConstructor: Function) => T
 ::syms to as
 
 ::docn

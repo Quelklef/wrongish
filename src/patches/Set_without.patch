@@ -1,6 +1,6 @@
 ::host Set
 ::hvar <T>
-::type (item: T): Set<T>
+::type (item: T) => Set<T>
 ::syms without
 
 ::docn

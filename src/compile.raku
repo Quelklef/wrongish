@@ -32,6 +32,20 @@ sub compile {
   }
   @type_chunks.push("");
 
+  # typescript unbound patch delcarations
+  @type_chunks.push('export const unbound: {' ~ "\n");
+  for @all_syms -> $sym {
+    my $type = @patches
+      .grep({ .<syms>.contains($sym) })
+      .map(-> %p {
+        "$sym%p<hvar>\(thisArg: %p<host>%p<hvar>, ...args: Parameters\<%p<type>>): ReturnType\<%p<type>>;"
+      })
+      .map({ .indent(4) }).join("\n") ~ "\n";
+    @type_chunks.push($type);
+  }
+  @type_chunks.push('}');
+  @type_chunks.push("");
+
   # javascript symbol definitions
   for @all_syms -> $sym {
     @impl_chunks.push("__symbol('$sym', __ex.$sym = __ex.\$$sym = Symbol('$sym'));");
@@ -63,7 +77,7 @@ sub compile {
     # compile typescript bits
     @type_chunks.push("") if $host_change;
     for %patch<syms>.Array -> $sym {
-      @type_chunks.push("export interface %patch<host>%patch<hvar> \{ [\$$sym]%patch<type>; \}");
+      @type_chunks.push("export interface %patch<host>%patch<hvar> \{ [\$$sym]: %patch<type>; \}");
     }
 
     # compile test
