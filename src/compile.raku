@@ -63,7 +63,7 @@ sub compile {
     @docn_chunks.push('***') if $host_change;
     @docn_chunks.push("### `%patch<host>\[\$$name]`");
     if %patch<syms>.elems > 1 {
-      my $aliases_str = @aliases.map({ "'\$$_'" }).join(", ");
+      my $aliases_str = @aliases.map({ "`\$$_`" }).join(", ");
       @docn_chunks.push("Aliases: $aliases_str \n");
     }
     @docn_chunks.push("Type: `%patch<host>%patch<hvar>\[\$$name]%patch<type>`");

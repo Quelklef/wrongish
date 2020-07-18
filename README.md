@@ -82,7 +82,7 @@ const tags = sentence.split(' ')
 
 ### `Object[$to]`
 
-Aliases: '$as' 
+Aliases: `$as` 
 
 
 Type: `Object[$to]<T>(targetConstructor: Function) => T`
@@ -103,7 +103,7 @@ console.log(uniq);  // [1, 2, 3]
 
 ### `Set[$every]`
 
-Aliases: '$all' 
+Aliases: `$all` 
 
 
 Type: `Set<T>[$every](pred: (item: T) => boolean) => boolean`
@@ -118,7 +118,7 @@ Like `Array$filter`, but for `Set`.
 
 ### `Set[$intersect]`
 
-Aliases: '$and' 
+Aliases: `$and` 
 
 
 Type: `Set<T>[$intersect](other: Set<T>) => Set<T>`
@@ -139,7 +139,7 @@ Set subtraction.
 
 ### `Set[$some]`
 
-Aliases: '$any' 
+Aliases: `$any` 
 
 
 Type: `Set<T>[$some](pred: (item: T) => boolean) => boolean`
@@ -148,7 +148,7 @@ Like `Array#some`, but for `Set`
 
 ### `Set[$union]`
 
-Aliases: '$or' 
+Aliases: `$or` 
 
 
 Type: `Set<T>[$union](other: Set<T>) => Set<T>`
