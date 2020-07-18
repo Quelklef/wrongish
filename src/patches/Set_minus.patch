@@ -16,3 +16,7 @@ function(other) {
 }
 
 ::test
+const A = new Set([-1, 0]);
+const B = new Set([0, 1]);
+const AmB = A[$.minus](B);
+expect(AmB).toStrictEqual(new Set([-1]));
