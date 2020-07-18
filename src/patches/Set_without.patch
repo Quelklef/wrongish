@@ -1,0 +1,16 @@
+::host Set
+::hvar <T>
+::type (item: T): Set<T>
+::syms without
+
+::docn
+Remove an item from a set.
+
+::impl
+function(item) {
+  const result = new Set(this);
+  result.delete(item);
+  return result;
+}
+
+::test

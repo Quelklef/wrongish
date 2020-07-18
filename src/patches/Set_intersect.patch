@@ -1,0 +1,20 @@
+::host Set
+::hvar <T>
+::type (other: Set<T>): Set<T>
+::syms intersect and
+
+::docn
+Set intersection.
+
+::impl
+function(other) {
+  const bigger = this.size > other.size ? this : other;
+  const smaller = this.size > other.size ? other : this;
+  const result = new Set();
+  for (const item of smaller)
+    if (bigger.has(item))
+      result.add(item);
+  return result;
+}
+
+::test

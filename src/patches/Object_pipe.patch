@@ -1,0 +1,26 @@
+::host Object
+::syms pipe
+::type <R>(func: (me: this) => R): R
+
+::docn
+Pass the object into a function: `obj[$pipe](func)` is the same as `func(object)`.
+
+This is useful e.g. in FP chains:
+
+```js
+const sentence = "At the beach #beachlife #livelaughlove";
+const tags = sentence.split(' ')
+  .map(word => word.strim())
+  .filter(word => word.startsWith('#'))
+  [$pipe](tags => new Set(tags));
+```
+
+::impl
+function(func) {
+  return func(this);
+}
+
+::test
+const obj = { x: 2, y: 4 };
+const result = obj[$.pipe](({ x, y }) => x * y);
+expect(result).toBe(8);

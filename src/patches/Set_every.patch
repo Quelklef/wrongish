@@ -1,0 +1,17 @@
+::host Set
+::hvar <T>
+::type (pred: (item: T) => boolean): boolean
+::syms every all
+
+::docn
+Like `Array#every`, but for `Set`.
+
+::impl
+function(pred) {
+  for (const item of this)
+    if (!pred(item))
+      return false;
+  return true;
+}
+
+::test

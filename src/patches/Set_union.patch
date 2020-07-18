@@ -1,0 +1,17 @@
+::host Set
+::hvar <T>
+::type (other: Set<T>): Set<T>
+::syms union or
+
+::docn
+Set union
+
+::impl
+function(other) {
+  const result = new Set();
+  for (const item of this) result.add(item);
+  for (const item of other) result.add(item);
+  return result;
+}
+
+::test

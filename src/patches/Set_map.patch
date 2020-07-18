@@ -1,0 +1,20 @@
+::host Set
+::hvar <T>
+::type <S>(mapper: (item: T) => S): Set<S>
+::syms map
+
+::docn
+Like `Array#map`, but for `Set`
+
+::impl
+function(mapper) {
+  const result = new Set();
+  for (const item of this)
+    result.add(mapper(item));
+  return result;
+}
+
+::test
+const items = new Set([1, 2, 3, 4, 5]);
+const result = items[$.map](x => Math.pow(x, 2));
+expect(result).toEqual(new Set([1, 4, 9, 16, 25]));

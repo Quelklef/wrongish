@@ -1,0 +1,30 @@
+::host Array
+::hvar <T>
+::type <S>(func: (x: T) => false | S): Array<S>
+::syms mapfilter
+
+::docn
+Map by the given function, and then filter out all values equal to false.
+
+```js
+const words = ['Hey', '@es6', '@tc39', 'quick', 'question'];
+const ats = words[$mapfilter](word => word.startsWith('@') && word.slice(1));
+console.log(ats);  // ['es6', 'tc39']
+Falsy values which are not equal to the value false are kept.
+```
+
+::impl
+function(mapper) {
+  const result = [];
+  for (const item of this) {
+    const mapped = mapper(item);
+    if (mapped !== false)
+      result.push(mapped);
+  }
+  return result;
+}
+
+::test
+const items = [1, 2, 3, 4, 5];
+const result = items[$.mapfilter](x => x % 2 === 0 && Math.pow(x, 2));
+expect(result).toEqual([4, 16]);
