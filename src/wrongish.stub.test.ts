@@ -1,7 +1,6 @@
 
-const $ = require('./wrongish');
-
-const expect = require('expect');
+import * as $ from './wrongish';
+import expect from 'expect';
 
 describe('wrongish', () => {
 
@@ -13,12 +12,14 @@ describe('wrongish', () => {
 
     it('Bound, unprefixed', () => {
       const { pipe } = require('./wrongish');
+      // @ts-ignore
       expect(arr[pipe](size)).toBe(3);
       expect(set[pipe](size)).toBe(3);
     });
 
     it('Bound, prefixed', () => {
       const { $pipe } = require('./wrongish');
+      // @ts-ignore
       expect(arr[$pipe](size)).toBe(3);
       expect(set[$pipe](size)).toBe(3);
     });

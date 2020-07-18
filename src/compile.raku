@@ -91,7 +91,7 @@ sub compile {
   mkdir($out_dir);
   fill_stub('./README.stub.md'       , '..', @docn_chunks.join("\n\n"));
   fill_stub('./wrongish.stub.js'     , $out_dir, @impl_chunks.join("\n"));
-  fill_stub('./wrongish.stub.test.js', $out_dir, @test_chunks.join("\n"));
+  fill_stub('./wrongish.stub.test.ts', $out_dir, @test_chunks.join("\n"));
   fill_stub('./wrongish.stub.d.ts'   , $out_dir, @type_chunks.join("\n"));
 
   print("Done\n");
