@@ -25,23 +25,12 @@ However, Wrongish is able to sidestep most of the dangers of extending native pr
 **Note**: names are exported both with and without a dollar sign, and methods are exported both bound and unbound (See below)
 
 ```js
-const { pipe } = require('wrongish');
-["hello", "world"][pipe](console.log.bind(console));
-
-// is the same as
-
-const { $pipe } = require('wrongish');
-["hello", "world"][$pipe](console.log.bind(console));
-
-// is the same as
-
-const { unbound: { pipe } } = require('wrongish');
-pipe(["hello", "world"], console.log.bind(console));
-
-// is the same as
-
-const { unbound: { $pipe } } = require('wrongish');
-$pipe(["hello", "world"], console.log.bind(console));
+const W = require('wrongish');
+// All of the following are the same
+obj[W.pipe](func);
+obj[W.$pipe](func);
+W.unbound.pipe(obj, func);
+W.unbound.$pipe(obj, func);
 ```
 
 Onto the methods!
