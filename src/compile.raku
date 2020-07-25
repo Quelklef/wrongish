@@ -32,18 +32,27 @@ sub compile {
   }
   @type_chunks.push("");
 
-  # typescript unbound patch delcarations
-  @type_chunks.push('export const unbound: {' ~ "\n");
-  for @all_syms -> $sym {
-    my $type = @patches
-      .grep({ .<syms>.contains($sym) })
-      .map(-> %p {
-        "$sym%p<hvar>\(thisArg: _Or\<ThisParameterType\<%p<type>, %p<host>%p<hvar>>>, ...args: Parameters\<%p<type>>): ReturnType\<%p<type>>;"
-      })
-      .map({ .indent(4) }).join("\n") ~ "\n";
-    @type_chunks.push($type);
+  # typscript bound declarations
+  for @patches -> %patch {
+    for %patch<syms>.Array -> $sym {
+      @type_chunks.push("export interface %patch<host>%patch<hvar> \{ [\$$sym]: %patch<type>; \}");
+    }
   }
-  @type_chunks.push('}');
+  @type_chunks.push("");
+  
+  # typescript type variables
+  for @patches -> %patch {
+    %patch<typeVarName> = "_%patch<host>_%patch<syms>.join('_')";
+    @type_chunks.push("type %patch<typeVarName> = %patch<type>");
+  }
+  @type_chunks.push("");
+
+  # typescript unbound declarations
+  for @patches -> %patch {
+    for %patch<syms>.Array -> $sym {
+      @type_chunks.push("interface _Unbound \{ $sym%patch<hvar>\(thisArg: _Or\<ThisParameterType\<%patch<typeVarName>>, %patch<host>%patch<hvar>>, ...args: Parameters\<%patch<typeVarName>>): ReturnType\<%patch<typeVarName>>; }");
+    }
+  }
   @type_chunks.push("");
 
   # javascript symbol definitions
@@ -73,12 +82,6 @@ sub compile {
     my $syms_as_js = '[' ~ %patch<syms>.map({ "'$_'" }).join(", ") ~ ']';
     @impl_chunks.push("__patch(%patch<host>, $syms_as_js, %patch<impl>);");
     @impl_chunks.push("");
-
-    # compile typescript bits
-    @type_chunks.push("") if $host_change;
-    for %patch<syms>.Array -> $sym {
-      @type_chunks.push("export interface %patch<host>%patch<hvar> \{ [\$$sym]: %patch<type>; \}");
-    }
 
     # compile test
     my $header = %patch<test>.contains('it(') ?? 'describe' !! 'it';
