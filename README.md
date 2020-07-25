@@ -39,7 +39,7 @@ Onto the methods!
 
 ### `Array[$mapfilter]`
 
-Type: `Array<T>[$mapfilter]<S>(func: (x: T) => false | S) => Array<S>`
+Type: `Array<T>[$mapfilter]: <S>(func: (x: T) => false | S) => Array<S>`
 
 Map by the given function, and then filter out all values equal to false.
 
@@ -56,7 +56,7 @@ Falsy values which are not equal to the value false are kept.
 Aliases: `$dedup`, `$deduplicated` 
 
 
-Type: `Array<T>[$uniq]() => Array<T>`
+Type: `Array<T>[$uniq]: () => Array<T>`
 
 Return an array equivalent to this array wherin only the first instance of each element is kept.
 
@@ -70,7 +70,7 @@ console.log(uniqd); // 'Misp'
 
 ### `Number[$clamp]`
 
-Type: `Number[$clamp](this: number | Number, lo: number, hi: number) => number`
+Type: `Number[$clamp]: (this: number | Number, lo: number, hi: number) => number`
 
 Return the nearest number in the range `[lo, hi]`.
 
@@ -81,7 +81,7 @@ Return the nearest number in the range `[lo, hi]`.
 Aliases: `$letIn` 
 
 
-Type: `Object[$pipe]<R>(func: (me: Object) => R) => R`
+Type: `Object[$pipe]: <R>(func: (me: Object) => R) => R`
 
 Pass the object into a function: `obj[$pipe](func)` is the same as `func(object)`.
 
@@ -100,7 +100,7 @@ const tags = sentence.split(' ')
 Aliases: `$as` 
 
 
-Type: `Object[$to]<T>(targetConstructor: Function) => T`
+Type: `Object[$to]: <T>(targetConstructor: Function) => T`
 
 Converts an object of one type to another type.
 
@@ -121,13 +121,13 @@ console.log(uniq);  // [1, 2, 3]
 Aliases: `$all` 
 
 
-Type: `Set<T>[$every](pred: (item: T) => boolean) => boolean`
+Type: `Set<T>[$every]: (pred: (item: T) => boolean) => boolean`
 
 Like `Array#every`, but for `Set`.
 
 ### `Set[$filter]`
 
-Type: `Set<T>[$filter](pred: (item: T) => boolean) => Set<T>`
+Type: `Set<T>[$filter]: (pred: (item: T) => boolean) => Set<T>`
 
 Like `Array$filter`, but for `Set`.
 
@@ -136,19 +136,19 @@ Like `Array$filter`, but for `Set`.
 Aliases: `$and` 
 
 
-Type: `Set<T>[$intersect](other: Set<T>) => Set<T>`
+Type: `Set<T>[$intersect]: (other: Set<T>) => Set<T>`
 
 Set intersection.
 
 ### `Set[$map]`
 
-Type: `Set<T>[$map]<S>(mapper: (item: T) => S) => Set<S>`
+Type: `Set<T>[$map]: <S>(mapper: (item: T) => S) => Set<S>`
 
 Like `Array#map`, but for `Set`
 
 ### `Set[$minus]`
 
-Type: `Set<T>[$minus](other: Set<T>) => Set<T>`
+Type: `Set<T>[$minus]: (other: Set<T>) => Set<T>`
 
 Set subtraction.
 
@@ -157,7 +157,7 @@ Set subtraction.
 Aliases: `$any` 
 
 
-Type: `Set<T>[$some](pred: (item: T) => boolean) => boolean`
+Type: `Set<T>[$some]: (pred: (item: T) => boolean) => boolean`
 
 Like `Array#some`, but for `Set`
 
@@ -166,18 +166,18 @@ Like `Array#some`, but for `Set`
 Aliases: `$or` 
 
 
-Type: `Set<T>[$union](other: Set<T>) => Set<T>`
+Type: `Set<T>[$union]: (other: Set<T>) => Set<T>`
 
 Set union
 
 ### `Set[$with]`
 
-Type: `Set<T>[$with](item: T) => Set<T>`
+Type: `Set<T>[$with]: (item: T) => Set<T>`
 
 Add an item to a set.
 
 ### `Set[$without]`
 
-Type: `Set<T>[$without](item: T) => Set<T>`
+Type: `Set<T>[$without]: (item: T) => Set<T>`
 
 Remove an item from a set.
