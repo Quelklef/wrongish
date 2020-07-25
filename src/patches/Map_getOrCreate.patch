@@ -1,0 +1,22 @@
+::host Map
+::hvar <K, V>
+::type (key: K, default: V): V
+::syms getOrCreate
+
+::docn
+Get a value from a map, or create a new one if it doesn't exist.
+
+::impl
+function(key, deflt) {
+  if (this.has(key)) {
+    return this.get(key);
+  } else {
+    this.set(key, deflt);
+    return deflt;
+  }
+}
+
+::test
+const m = new Map();
+expect(m[$.getOrCreate]('x', 'y')).toBe('y');
+expect(m[$.getOrCreate]('x', 'z')).toBe('y');

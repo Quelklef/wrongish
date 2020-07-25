@@ -88,6 +88,12 @@ Type: `Map<K, V>[$getOr]: <Alt>(key: K, alt: Alt): V | Alt`
 
 Return a value from a map, if it exists, or an alternative value
 
+### `Map[$getOrCreate]`
+
+Type: `Map<K, V>[$getOrCreate]: (key: K, default: V): V`
+
+Get a value from a map, or create a new one if it doesn't exist.
+
 ***
 
 ### `Number[$clamp]`
