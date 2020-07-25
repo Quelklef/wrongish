@@ -1,0 +1,31 @@
+::host Array
+::hvar <T>
+::type () => Array<T>
+::syms uniq dedup deduplicated
+
+::docn
+Return an array equivalent to this array wherin only the first instance of each element is kept.
+
+```js
+const letters = Array.from('Mississippi');
+const uniqd = letters[$uniq]().join('');
+console.log(uniqd); // 'Misp'
+```
+
+::impl
+function() {
+  const has = new Set();
+  const result = [];
+  for (const elem of this) {
+    if (!has.has(elem)) {
+      result.push(elem);
+      has.add(elem);
+    }
+  }
+  return result;
+}
+
+::test
+const letters = Array.from('Mississippi');
+const uniqd = letters[$.uniq]().join('');
+expect(uniqd).toBe('Misp');

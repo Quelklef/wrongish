@@ -51,6 +51,21 @@ console.log(ats);  // ['es6', 'tc39']
 
 Falsy values which are not equal to the value false are kept.
 
+### `Array[$uniq]`
+
+Aliases: `$dedup`, `$deduplicated` 
+
+
+Type: `Array<T>[$uniq]() => Array<T>`
+
+Return an array equivalent to this array wherin only the first instance of each element is kept.
+
+```js
+const letters = Array.from('Mississippi');
+const uniqd = letters[$uniq]().join('');
+console.log(uniqd); // 'Misp'
+```
+
 ***
 
 ### `Number[$clamp]`
