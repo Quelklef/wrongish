@@ -38,7 +38,7 @@ sub compile {
     my $type = @patches
       .grep({ .<syms>.contains($sym) })
       .map(-> %p {
-        "$sym%p<hvar>\(thisArg: %p<host>%p<hvar>, ...args: Parameters\<%p<type>>): ReturnType\<%p<type>>;"
+        "$sym%p<hvar>\(thisArg: _Or\<ThisParameterType\<%p<type>, %p<host>%p<hvar>>>, ...args: Parameters\<%p<type>>): ReturnType\<%p<type>>;"
       })
       .map({ .indent(4) }).join("\n") ~ "\n";
     @type_chunks.push($type);

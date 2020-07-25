@@ -1,0 +1,16 @@
+::host Number
+::type (this: number | Number, lo: number, hi: number): number
+::syms clamp
+
+::docn
+Return the nearest number in the range `[lo, hi]`.
+
+::impl
+function(lo, hi) {
+  return Math.max(lo, Math.min(hi, +this));
+}
+
+::test
+expect($.unbound.clamp(9, 1, 5)).toBe(5);
+expect($.unbound.clamp(3, 1, 5)).toBe(3);
+expect($.unbound.clamp(0, 1, 5)).toBe(1);

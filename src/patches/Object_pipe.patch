@@ -1,5 +1,5 @@
 ::host Object
-::syms pipe
+::syms pipe letIn
 ::type <R>(func: (me: Object) => R) => R
 
 ::docn

@@ -53,7 +53,18 @@ Falsy values which are not equal to the value false are kept.
 
 ***
 
+### `Number[$clamp]`
+
+Type: `Number[$clamp](this: number | Number, lo: number, hi: number): number`
+
+Return the nearest number in the range `[lo, hi]`.
+
+***
+
 ### `Object[$pipe]`
+
+Aliases: `$letIn` 
+
 
 Type: `Object[$pipe]<R>(func: (me: Object) => R) => R`
 
