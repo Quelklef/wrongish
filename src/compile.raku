@@ -85,7 +85,8 @@ sub compile {
 
     # compile test
     my $header = %patch<test>.contains('it(') ?? 'describe' !! 'it';
-    @test_chunks.push("$header\('%patch<host>\[$name]', () => \{\n%patch<test>.indent(2)\n\});\n".indent(2));
+    my $async = <await async Promise>.grep({ %patch<test>.contains($_) }) ?? 'async' !! '';
+    @test_chunks.push("$header\('%patch<host>\[$name]', $async () => \{\n%patch<test>.indent(2)\n\});\n".indent(2));
     note "Warning: patch %patch<file> has no tests" if %patch<test>.trim eq '';
   }
 

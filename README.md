@@ -68,6 +68,14 @@ console.log(uniqd); // 'Misp'
 
 ***
 
+### `Function[$throttle]`
+
+Type: `Function[$throttle]: <F extends (...args: any[]) => void>(this: F, delay: number): F`
+
+Restrict a function to only run once every `delay` milliseconds.
+
+***
+
 ### `Number[$clamp]`
 
 Type: `Number[$clamp]: (this: number | Number, lo: number, hi: number) => number`

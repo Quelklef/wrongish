@@ -1,0 +1,47 @@
+::host Function
+::type <F extends (...args: any[]) => void>(this: F, delay: number): F
+::syms throttle
+
+::docn
+Restrict a function to only run once every `delay` milliseconds.
+
+::impl
+function (delay) {
+  let queuedId = null;
+  let prevTime = 0;
+
+  const func = this;
+  function invoke(thisArg, args) {
+    prevTime = Date.now();
+    queuedId = null;
+    func.call(thisArg, ...args);
+  }
+
+  return function(...args) {
+    if (queuedId !== null) return;
+    const now = Date.now();
+    if (now - prevTime <= delay)
+      queuedId = setTimeout(() => invoke(this, args), (prevTime + delay) - now);
+    else
+      invoke(this, args);
+  }
+}
+
+::test
+return new Promise(resolve => {
+
+  let called = 0;
+  const inc: () => void = () => called++;
+
+  const th: typeof inc = inc[$.throttle](50);
+
+  const ivl = setInterval(th, 10);
+  setTimeout(finish, 125);
+
+  function finish() {
+    clearInterval(ivl);
+    expect(called).toBe(3);
+    resolve();
+  }
+
+});
