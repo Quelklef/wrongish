@@ -1,0 +1,28 @@
+::host Object
+::type <T>(this: T | null | undefined, err?: string) => T
+::syms some
+
+::docn
+Assert that a value is non-nully.
+
+If the supplied value is `null` or `undefined`, throw an error. Else, return the argument.
+
+::impl
+function(err) {
+  if (this === null || this === undefined)
+    throw Error(err || `some(${this})`);
+  return this;
+}
+
+::test
+it("throws on null", () => {
+  expect(() => $.unbound.some(null)).toThrow();
+});
+
+it("throws on undefined", () => {
+  expect(() => $.unbound.some(undefined)).toThrow();
+});
+
+it("returns the argument otherwise", () => {
+  expect($.unbound.some('')).toBe('');
+});

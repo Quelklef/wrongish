@@ -109,6 +109,14 @@ const tags = sentence.split(' ')
   [$pipe](tags => new Set(tags));
 ```
 
+### `Object[$some]`
+
+Type: `Object[$some]: <T>(this: T | null | undefined, err?: string) => T`
+
+Assert that a value is non-nully.
+
+If the supplied value is `null` or `undefined`, throw an error. Else, return the argument.
+
 ### `Object[$to]`
 
 Aliases: `$as` 

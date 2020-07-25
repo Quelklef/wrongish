@@ -1,0 +1,645 @@
+
+> wrongish@0.5.1 dev /home/pond/dev/wrongish
+> nodemon --watch ./src -e raku,md,ts,js,patch -x "npm run test"
+
+[33m[nodemon] 2.0.4[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): src/**/*[39m
+[33m[nodemon] watching extensions: raku,md,ts,js,patch[39m
+[32m[nodemon] starting `npm run test`[39m
+
+> wrongish@0.5.1 test /home/pond/dev/wrongish
+> npm run build && npx mocha -r ts-node/register compiled/wrongish.test.ts
+
+
+> wrongish@0.5.1 build /home/pond/dev/wrongish
+> cd src && perl6 --ll-exception compile.raku && cd ..
+
+Processing ./patches/Object_pipe.patch
+Processing ./patches/Set_some.patch
+Processing ./patches/Set_filter.patch
+Processing ./patches/Function_throttle.patch
+Processing ./patches/Set_union.patch
+Processing ./patches/Number_clamp.patch
+Processing ./patches/Object_some.patch
+Processing ./patches/Set_map.patch
+Processing ./patches/Set_minus.patch
+Processing ./patches/Object_to.patch
+Processing ./patches/Array_uniq.patch
+Processing ./patches/Set_with.patch
+Processing ./patches/Array_mapfilter.patch
+Processing ./patches/Set_every.patch
+Processing ./patches/Function_debounce.patch
+Processing ./patches/Set_intersect.patch
+Processing ./patches/Set_without.patch
+Done
+
+
+  wrongish
+    ✓ Array[mapfilter]
+    ✓ Array[uniq]
+    ✓ Function[debounce] (256ms)
+    ✓ Function[throttle] (127ms)
+{
+  mapfilter: [Function: unbound],
+  '$mapfilter': [Function: unbound],
+  uniq: [Function: unbound],
+  '$uniq': [Function: unbound],
+  dedup: [Function: unbound],
+  '$dedup': [Function: unbound],
+  deduplicated: [Function: unbound],
+  '$deduplicated': [Function: unbound],
+  debounce: [Function: unbound],
+  '$debounce': [Function: unbound],
+  throttle: [Function: unbound],
+  '$throttle': [Function: unbound],
+  clamp: [Function: unbound],
+  '$clamp': [Function: unbound],
+  pipe: [Function: unbound],
+  '$pipe': [Function: unbound],
+  letIn: [Function: unbound],
+  '$letIn': [Function: unbound],
+  some: [Function: unbound],
+  '$some': [Function: unbound],
+  to: [Function: unbound],
+  '$to': [Function: unbound],
+  as: [Function: unbound],
+  '$as': [Function: unbound],
+  every: [Function: unbound],
+  '$every': [Function: unbound],
+  all: [Function: unbound],
+  '$all': [Function: unbound],
+  filter: [Function: unbound],
+  '$filter': [Function: unbound],
+  intersect: [Function: unbound],
+  '$intersect': [Function: unbound],
+  and: [Function: unbound],
+  '$and': [Function: unbound],
+  map: [Function: unbound],
+  '$map': [Function: unbound],
+  minus: [Function: unbound],
+  '$minus': [Function: unbound],
+  any: [Function: unbound],
+  '$any': [Function: unbound],
+  union: [Function: unbound],
+  '$union': [Function: unbound],
+  or: [Function: unbound],
+  '$or': [Function: unbound],
+  with: [Function: unbound],
+  '$with': [Function: unbound],
+  without: [Function: unbound],
+  '$without': [Function: unbound]
+}
+{
+  mapfilter: [Function: unbound],
+  '$mapfilter': [Function: unbound],
+  uniq: [Function: unbound],
+  '$uniq': [Function: unbound],
+  dedup: [Function: unbound],
+  '$dedup': [Function: unbound],
+  deduplicated: [Function: unbound],
+  '$deduplicated': [Function: unbound],
+  debounce: [Function: unbound],
+  '$debounce': [Function: unbound],
+  throttle: [Function: unbound],
+  '$throttle': [Function: unbound],
+  clamp: [Function: unbound],
+  '$clamp': [Function: unbound],
+  pipe: [Function: unbound],
+  '$pipe': [Function: unbound],
+  letIn: [Function: unbound],
+  '$letIn': [Function: unbound],
+  some: [Function: unbound],
+  '$some': [Function: unbound],
+  to: [Function: unbound],
+  '$to': [Function: unbound],
+  as: [Function: unbound],
+  '$as': [Function: unbound],
+  every: [Function: unbound],
+  '$every': [Function: unbound],
+  all: [Function: unbound],
+  '$all': [Function: unbound],
+  filter: [Function: unbound],
+  '$filter': [Function: unbound],
+  intersect: [Function: unbound],
+  '$intersect': [Function: unbound],
+  and: [Function: unbound],
+  '$and': [Function: unbound],
+  map: [Function: unbound],
+  '$map': [Function: unbound],
+  minus: [Function: unbound],
+  '$minus': [Function: unbound],
+  any: [Function: unbound],
+  '$any': [Function: unbound],
+  union: [Function: unbound],
+  '$union': [Function: unbound],
+  or: [Function: unbound],
+  '$or': [Function: unbound],
+  with: [Function: unbound],
+  '$with': [Function: unbound],
+  without: [Function: unbound],
+  '$without': [Function: unbound]
+}
+{
+  mapfilter: [Function: unbound],
+  '$mapfilter': [Function: unbound],
+  uniq: [Function: unbound],
+  '$uniq': [Function: unbound],
+  dedup: [Function: unbound],
+  '$dedup': [Function: unbound],
+  deduplicated: [Function: unbound],
+  '$deduplicated': [Function: unbound],
+  debounce: [Function: unbound],
+  '$debounce': [Function: unbound],
+  throttle: [Function: unbound],
+  '$throttle': [Function: unbound],
+  clamp: [Function: unbound],
+  '$clamp': [Function: unbound],
+  pipe: [Function: unbound],
+  '$pipe': [Function: unbound],
+  letIn: [Function: unbound],
+  '$letIn': [Function: unbound],
+  some: [Function: unbound],
+  '$some': [Function: unbound],
+  to: [Function: unbound],
+  '$to': [Function: unbound],
+  as: [Function: unbound],
+  '$as': [Function: unbound],
+  every: [Function: unbound],
+  '$every': [Function: unbound],
+  all: [Function: unbound],
+  '$all': [Function: unbound],
+  filter: [Function: unbound],
+  '$filter': [Function: unbound],
+  intersect: [Function: unbound],
+  '$intersect': [Function: unbound],
+  and: [Function: unbound],
+  '$and': [Function: unbound],
+  map: [Function: unbound],
+  '$map': [Function: unbound],
+  minus: [Function: unbound],
+  '$minus': [Function: unbound],
+  any: [Function: unbound],
+  '$any': [Function: unbound],
+  union: [Function: unbound],
+  '$union': [Function: unbound],
+  or: [Function: unbound],
+  '$or': [Function: unbound],
+  with: [Function: unbound],
+  '$with': [Function: unbound],
+  without: [Function: unbound],
+  '$without': [Function: unbound]
+}
+    ✓ Number[clamp]
+    ✓ Object[pipe]
+    ✓ Set[every]
+    ✓ Set[filter]
+    ✓ Set[intersect]
+    ✓ Set[map]
+    ✓ Set[minus]
+    ✓ Set[some]
+    ✓ Set[union]
+    ✓ Set[with]
+    ✓ Set[without]
+    Supports 4 syntaxes
+      ✓ Bound, unprefixed
+      ✓ Bound, prefixed
+<ref *1> Object [global] {
+  global: [Circular *1],
+  clearInterval: [Function: clearInterval],
+  clearTimeout: [Function: clearTimeout],
+  setInterval: [Function: setInterval],
+  setTimeout: [Function: setTimeout] {
+    [Symbol(nodejs.util.promisify.custom)]: [Function (anonymous)]
+  },
+  queueMicrotask: [Function: queueMicrotask],
+  clearImmediate: [Function: clearImmediate],
+  setImmediate: [Function: setImmediate] {
+    [Symbol(nodejs.util.promisify.custom)]: [Function (anonymous)]
+  },
+  before: [Function: before],
+  after: [Function: after],
+  beforeEach: [Function: beforeEach],
+  afterEach: [Function: afterEach],
+  run: undefined,
+  context: [Function (anonymous)] {
+    skip: [Function (anonymous)],
+    only: [Function (anonymous)]
+  },
+  describe: [Function (anonymous)] {
+    skip: [Function (anonymous)],
+    only: [Function (anonymous)]
+  },
+  xcontext: [Function (anonymous)],
+  xdescribe: [Function (anonymous)],
+  specify: [Function (anonymous)] {
+    only: [Function (anonymous)],
+    skip: [Function (anonymous)],
+    retries: [Function (anonymous)]
+  },
+  it: [Function (anonymous)] {
+    only: [Function (anonymous)],
+    skip: [Function (anonymous)],
+    retries: [Function (anonymous)]
+  },
+  xspecify: [Function (anonymous)],
+  xit: [Function (anonymous)]
+}
+<ref *1> Object [global] {
+  global: [Circular *1],
+  clearInterval: [Function: clearInterval],
+  clearTimeout: [Function: clearTimeout],
+  setInterval: [Function: setInterval],
+  setTimeout: [Function: setTimeout] {
+    [Symbol(nodejs.util.promisify.custom)]: [Function (anonymous)]
+  },
+  queueMicrotask: [Function: queueMicrotask],
+  clearImmediate: [Function: clearImmediate],
+  setImmediate: [Function: setImmediate] {
+    [Symbol(nodejs.util.promisify.custom)]: [Function (anonymous)]
+  },
+  before: [Function: before],
+  after: [Function: after],
+  beforeEach: [Function: beforeEach],
+  afterEach: [Function: afterEach],
+  run: undefined,
+  context: [Function (anonymous)] {
+    skip: [Function (anonymous)],
+    only: [Function (anonymous)]
+  },
+  describe: [Function (anonymous)] {
+    skip: [Function (anonymous)],
+    only: [Function (anonymous)]
+  },
+  xcontext: [Function (anonymous)],
+  xdescribe: [Function (anonymous)],
+  specify: [Function (anonymous)] {
+    only: [Function (anonymous)],
+    skip: [Function (anonymous)],
+    retries: [Function (anonymous)]
+  },
+  it: [Function (anonymous)] {
+    only: [Function (anonymous)],
+    skip: [Function (anonymous)],
+    retries: [Function (anonymous)]
+  },
+  xspecify: [Function (anonymous)],
+  xit: [Function (anonymous)]
+}
+      ✓ Unbound, unprefixed
+<ref *1> Object [global] {
+  global: [Circular *1],
+  clearInterval: [Function: clearInterval],
+  clearTimeout: [Function: clearTimeout],
+  setInterval: [Function: setInterval],
+  setTimeout: [Function: setTimeout] {
+    [Symbol(nodejs.util.promisify.custom)]: [Function (anonymous)]
+  },
+  queueMicrotask: [Function: queueMicrotask],
+  clearImmediate: [Function: clearImmediate],
+  setImmediate: [Function: setImmediate] {
+    [Symbol(nodejs.util.promisify.custom)]: [Function (anonymous)]
+  },
+  before: [Function: before],
+  after: [Function: after],
+  beforeEach: [Function: beforeEach],
+  afterEach: [Function: afterEach],
+  run: undefined,
+  context: [Function (anonymous)] {
+    skip: [Function (anonymous)],
+    only: [Function (anonymous)]
+  },
+  describe: [Function (anonymous)] {
+    skip: [Function (anonymous)],
+    only: [Function (anonymous)]
+  },
+  xcontext: [Function (anonymous)],
+  xdescribe: [Function (anonymous)],
+  specify: [Function (anonymous)] {
+    only: [Function (anonymous)],
+    skip: [Function (anonymous)],
+    retries: [Function (anonymous)]
+  },
+  it: [Function (anonymous)] {
+    only: [Function (anonymous)],
+    skip: [Function (anonymous)],
+    retries: [Function (anonymous)]
+  },
+  xspecify: [Function (anonymous)],
+  xit: [Function (anonymous)]
+}
+<ref *1> Object [global] {
+  global: [Circular *1],
+  clearInterval: [Function: clearInterval],
+  clearTimeout: [Function: clearTimeout],
+  setInterval: [Function: setInterval],
+  setTimeout: [Function: setTimeout] {
+    [Symbol(nodejs.util.promisify.custom)]: [Function (anonymous)]
+  },
+  queueMicrotask: [Function: queueMicrotask],
+  clearImmediate: [Function: clearImmediate],
+  setImmediate: [Function: setImmediate] {
+    [Symbol(nodejs.util.promisify.custom)]: [Function (anonymous)]
+  },
+  before: [Function: before],
+  after: [Function: after],
+  beforeEach: [Function: beforeEach],
+  afterEach: [Function: afterEach],
+  run: undefined,
+  context: [Function (anonymous)] {
+    skip: [Function (anonymous)],
+    only: [Function (anonymous)]
+  },
+  describe: [Function (anonymous)] {
+    skip: [Function (anonymous)],
+    only: [Function (anonymous)]
+  },
+  xcontext: [Function (anonymous)],
+  xdescribe: [Function (anonymous)],
+  specify: [Function (anonymous)] {
+    only: [Function (anonymous)],
+    skip: [Function (anonymous)],
+    retries: [Function (anonymous)]
+  },
+  it: [Function (anonymous)] {
+    only: [Function (anonymous)],
+    skip: [Function (anonymous)],
+    retries: [Function (anonymous)]
+  },
+  xspecify: [Function (anonymous)],
+  xit: [Function (anonymous)]
+}
+      ✓ Unbound, prefixed
+    Object[some]
+{
+  mapfilter: [Function: unbound],
+  '$mapfilter': [Function: unbound],
+  uniq: [Function: unbound],
+  '$uniq': [Function: unbound],
+  dedup: [Function: unbound],
+  '$dedup': [Function: unbound],
+  deduplicated: [Function: unbound],
+  '$deduplicated': [Function: unbound],
+  debounce: [Function: unbound],
+  '$debounce': [Function: unbound],
+  throttle: [Function: unbound],
+  '$throttle': [Function: unbound],
+  clamp: [Function: unbound],
+  '$clamp': [Function: unbound],
+  pipe: [Function: unbound],
+  '$pipe': [Function: unbound],
+  letIn: [Function: unbound],
+  '$letIn': [Function: unbound],
+  some: [Function: unbound],
+  '$some': [Function: unbound],
+  to: [Function: unbound],
+  '$to': [Function: unbound],
+  as: [Function: unbound],
+  '$as': [Function: unbound],
+  every: [Function: unbound],
+  '$every': [Function: unbound],
+  all: [Function: unbound],
+  '$all': [Function: unbound],
+  filter: [Function: unbound],
+  '$filter': [Function: unbound],
+  intersect: [Function: unbound],
+  '$intersect': [Function: unbound],
+  and: [Function: unbound],
+  '$and': [Function: unbound],
+  map: [Function: unbound],
+  '$map': [Function: unbound],
+  minus: [Function: unbound],
+  '$minus': [Function: unbound],
+  any: [Function: unbound],
+  '$any': [Function: unbound],
+  union: [Function: unbound],
+  '$union': [Function: unbound],
+  or: [Function: unbound],
+  '$or': [Function: unbound],
+  with: [Function: unbound],
+  '$with': [Function: unbound],
+  without: [Function: unbound],
+  '$without': [Function: unbound]
+}
+<ref *1> Object [global] {
+  global: [Circular *1],
+  clearInterval: [Function: clearInterval],
+  clearTimeout: [Function: clearTimeout],
+  setInterval: [Function: setInterval],
+  setTimeout: [Function: setTimeout] {
+    [Symbol(nodejs.util.promisify.custom)]: [Function (anonymous)]
+  },
+  queueMicrotask: [Function: queueMicrotask],
+  clearImmediate: [Function: clearImmediate],
+  setImmediate: [Function: setImmediate] {
+    [Symbol(nodejs.util.promisify.custom)]: [Function (anonymous)]
+  },
+  before: [Function: before],
+  after: [Function: after],
+  beforeEach: [Function: beforeEach],
+  afterEach: [Function: afterEach],
+  run: undefined,
+  context: [Function (anonymous)] {
+    skip: [Function (anonymous)],
+    only: [Function (anonymous)]
+  },
+  describe: [Function (anonymous)] {
+    skip: [Function (anonymous)],
+    only: [Function (anonymous)]
+  },
+  xcontext: [Function (anonymous)],
+  xdescribe: [Function (anonymous)],
+  specify: [Function (anonymous)] {
+    only: [Function (anonymous)],
+    skip: [Function (anonymous)],
+    retries: [Function (anonymous)]
+  },
+  it: [Function (anonymous)] {
+    only: [Function (anonymous)],
+    skip: [Function (anonymous)],
+    retries: [Function (anonymous)]
+  },
+  xspecify: [Function (anonymous)],
+  xit: [Function (anonymous)]
+}
+      1) throws on null
+{
+  mapfilter: [Function: unbound],
+  '$mapfilter': [Function: unbound],
+  uniq: [Function: unbound],
+  '$uniq': [Function: unbound],
+  dedup: [Function: unbound],
+  '$dedup': [Function: unbound],
+  deduplicated: [Function: unbound],
+  '$deduplicated': [Function: unbound],
+  debounce: [Function: unbound],
+  '$debounce': [Function: unbound],
+  throttle: [Function: unbound],
+  '$throttle': [Function: unbound],
+  clamp: [Function: unbound],
+  '$clamp': [Function: unbound],
+  pipe: [Function: unbound],
+  '$pipe': [Function: unbound],
+  letIn: [Function: unbound],
+  '$letIn': [Function: unbound],
+  some: [Function: unbound],
+  '$some': [Function: unbound],
+  to: [Function: unbound],
+  '$to': [Function: unbound],
+  as: [Function: unbound],
+  '$as': [Function: unbound],
+  every: [Function: unbound],
+  '$every': [Function: unbound],
+  all: [Function: unbound],
+  '$all': [Function: unbound],
+  filter: [Function: unbound],
+  '$filter': [Function: unbound],
+  intersect: [Function: unbound],
+  '$intersect': [Function: unbound],
+  and: [Function: unbound],
+  '$and': [Function: unbound],
+  map: [Function: unbound],
+  '$map': [Function: unbound],
+  minus: [Function: unbound],
+  '$minus': [Function: unbound],
+  any: [Function: unbound],
+  '$any': [Function: unbound],
+  union: [Function: unbound],
+  '$union': [Function: unbound],
+  or: [Function: unbound],
+  '$or': [Function: unbound],
+  with: [Function: unbound],
+  '$with': [Function: unbound],
+  without: [Function: unbound],
+  '$without': [Function: unbound]
+}
+<ref *1> Object [global] {
+  global: [Circular *1],
+  clearInterval: [Function: clearInterval],
+  clearTimeout: [Function: clearTimeout],
+  setInterval: [Function: setInterval],
+  setTimeout: [Function: setTimeout] {
+    [Symbol(nodejs.util.promisify.custom)]: [Function (anonymous)]
+  },
+  queueMicrotask: [Function: queueMicrotask],
+  clearImmediate: [Function: clearImmediate],
+  setImmediate: [Function: setImmediate] {
+    [Symbol(nodejs.util.promisify.custom)]: [Function (anonymous)]
+  },
+  before: [Function: before],
+  after: [Function: after],
+  beforeEach: [Function: beforeEach],
+  afterEach: [Function: afterEach],
+  run: undefined,
+  context: [Function (anonymous)] {
+    skip: [Function (anonymous)],
+    only: [Function (anonymous)]
+  },
+  describe: [Function (anonymous)] {
+    skip: [Function (anonymous)],
+    only: [Function (anonymous)]
+  },
+  xcontext: [Function (anonymous)],
+  xdescribe: [Function (anonymous)],
+  specify: [Function (anonymous)] {
+    only: [Function (anonymous)],
+    skip: [Function (anonymous)],
+    retries: [Function (anonymous)]
+  },
+  it: [Function (anonymous)] {
+    only: [Function (anonymous)],
+    skip: [Function (anonymous)],
+    retries: [Function (anonymous)]
+  },
+  xspecify: [Function (anonymous)],
+  xit: [Function (anonymous)]
+}
+      2) throws on undefined
+{
+  mapfilter: [Function: unbound],
+  '$mapfilter': [Function: unbound],
+  uniq: [Function: unbound],
+  '$uniq': [Function: unbound],
+  dedup: [Function: unbound],
+  '$dedup': [Function: unbound],
+  deduplicated: [Function: unbound],
+  '$deduplicated': [Function: unbound],
+  debounce: [Function: unbound],
+  '$debounce': [Function: unbound],
+  throttle: [Function: unbound],
+  '$throttle': [Function: unbound],
+  clamp: [Function: unbound],
+  '$clamp': [Function: unbound],
+  pipe: [Function: unbound],
+  '$pipe': [Function: unbound],
+  letIn: [Function: unbound],
+  '$letIn': [Function: unbound],
+  some: [Function: unbound],
+  '$some': [Function: unbound],
+  to: [Function: unbound],
+  '$to': [Function: unbound],
+  as: [Function: unbound],
+  '$as': [Function: unbound],
+  every: [Function: unbound],
+  '$every': [Function: unbound],
+  all: [Function: unbound],
+  '$all': [Function: unbound],
+  filter: [Function: unbound],
+  '$filter': [Function: unbound],
+  intersect: [Function: unbound],
+  '$intersect': [Function: unbound],
+  and: [Function: unbound],
+  '$and': [Function: unbound],
+  map: [Function: unbound],
+  '$map': [Function: unbound],
+  minus: [Function: unbound],
+  '$minus': [Function: unbound],
+  any: [Function: unbound],
+  '$any': [Function: unbound],
+  union: [Function: unbound],
+  '$union': [Function: unbound],
+  or: [Function: unbound],
+  '$or': [Function: unbound],
+  with: [Function: unbound],
+  '$with': [Function: unbound],
+  without: [Function: unbound],
+  '$without': [Function: unbound]
+}
+      3) returns the argument otherwise
+    Object[to]
+      ✓ Array -> Set
+      ✓ Set -> Array
+
+
+  21 passing (445ms)
+  3 failing
+
+  1) wrongish
+       Object[some]
+         throws on null:
+     Error: expect(received).toThrow()
+
+Received function did not throw
+      at Context.<anonymous> (compiled/wrongish.test.ts:108:42)
+      at processImmediate (internal/timers.js:456:21)
+
+  2) wrongish
+       Object[some]
+         throws on undefined:
+     Error: expect(received).toThrow()
+
+Received function did not throw
+      at Context.<anonymous> (compiled/wrongish.test.ts:112:47)
+      at processImmediate (internal/timers.js:456:21)
+
+  3) wrongish
+       Object[some]
+         returns the argument otherwise:
+     TypeError: Cannot read property 'Symbol(some)' of undefined
+      at Object.unbound (compiled/wrongish.js:25:37)
+      at Context.<anonymous> (compiled/wrongish.test.ts:116:24)
+      at processImmediate (internal/timers.js:456:21)
+
+
+
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m

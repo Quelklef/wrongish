@@ -11,6 +11,13 @@ function(lo, hi) {
 }
 
 ::test
+
 expect($.unbound.clamp(9, 1, 5)).toBe(5);
+expect(new Number(9)[$.clamp](1, 5)).toBe(5);
+
 expect($.unbound.clamp(3, 1, 5)).toBe(3);
+expect(new Number(3)[$.clamp](1, 5)).toBe(3);
+
 expect($.unbound.clamp(0, 1, 5)).toBe(1);
+expect(new Number(0)[$.clamp](1, 5)).toBe(1);
+
