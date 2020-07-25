@@ -68,6 +68,12 @@ console.log(uniqd); // 'Misp'
 
 ***
 
+### `Function[$debounce]`
+
+Type: `Function[$debounce]: <F extends (...args: any[]) => void>(this: F, delay: number) => F`
+
+Collapses calls within `delay` milliseconds of each other into a single call.
+
 ### `Function[$throttle]`
 
 Type: `Function[$throttle]: <F extends (...args: any[]) => void>(this: F, delay: number): F`
