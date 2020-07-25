@@ -141,8 +141,8 @@ Type: `Object[$to]: <T>(targetConstructor: Function) => T`
 Converts an object of one type to another type.
 
 Supported conversions:
-- `Set` -> `Array`
-- `Array` -> `Set`
+- `Iterable` -> `Array`
+- `Iterable` -> `Set`
 
 ```js
 const items = [1, 1, 2, 2, 3, 3];
