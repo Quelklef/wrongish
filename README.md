@@ -82,6 +82,14 @@ Restrict a function to only run once every `delay` milliseconds.
 
 ***
 
+### `Map[$getOr]`
+
+Type: `Map<K, V>[$getOr]: <Alt>(key: K, alt: Alt): V | Alt`
+
+Return a value from a map, if it exists, or an alternative value
+
+***
+
 ### `Number[$clamp]`
 
 Type: `Number[$clamp]: (this: number | Number, lo: number, hi: number) => number`
