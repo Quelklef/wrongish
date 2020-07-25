@@ -1,5 +1,5 @@
 ::host Number
-::type (this: number | Number, lo: number, hi: number): number
+::type (this: number | Number, lo: number, hi: number) => number
 ::syms clamp
 
 ::docn

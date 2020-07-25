@@ -70,7 +70,7 @@ console.log(uniqd); // 'Misp'
 
 ### `Number[$clamp]`
 
-Type: `Number[$clamp](this: number | Number, lo: number, hi: number): number`
+Type: `Number[$clamp](this: number | Number, lo: number, hi: number) => number`
 
 Return the nearest number in the range `[lo, hi]`.
 
