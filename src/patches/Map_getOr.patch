@@ -1,7 +1,6 @@
-::host Map
-::hvar <K, V>
+::host Map<K, V>
 ::syms getOr
-::type <Alt>(key: K, alt: Alt): V | Alt
+::type <Alt>(key: K, alt: Alt) => V | Alt
 
 ::docn
 Return a value from a map, if it exists, or an alternative value

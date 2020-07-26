@@ -1,5 +1,5 @@
 ::host Function
-::type <F extends (...args: any[]) => void>(this: F, delay: number): F
+::type <F extends (...args: any[]) => void>(this: F, delay: number) => F
 ::syms throttle
 
 ::docn

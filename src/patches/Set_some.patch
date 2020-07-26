@@ -1,5 +1,4 @@
-::host Set
-::hvar <T>
+::host Set<T>
 ::type (pred: (item: T) => boolean) => boolean
 ::syms some any
 

@@ -1,6 +1,5 @@
-declare module 'wrongish';
+type __Default<A, B> = unknown extends B ? A : B;
 
-type _Or<A, B> = A instanceof unknown ? B : A;
+// %ENTRY //
 
-// %ENTRY
-export const unbound: _Unbound;
+export declare const unbound: __Unbound;

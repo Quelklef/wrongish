@@ -1,5 +1,4 @@
-::host Set
-::hvar <T>
+::host Set<T>
 ::type (item: T) => Set<T>
 ::syms with
 

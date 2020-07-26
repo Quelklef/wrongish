@@ -1,5 +1,4 @@
-::host Set
-::hvar <T>
+::host Set<T>
 ::type (other: Set<T>) => Set<T>
 ::syms union or
 

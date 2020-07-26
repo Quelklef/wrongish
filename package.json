@@ -1,12 +1,12 @@
 {
   "name": "wrongish",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "A naughty utility library",
   "main": "compiled/wrongish.js",
   "types": "compiled/wrongish.d.ts",
   "scripts": {
     "build": "cd src && perl6 --ll-exception compile.raku && cd ..",
-    "test": "npm run build && npx mocha -r ts-node/register compiled/wrongish.test.ts",
+    "test": "npm run build && tsc && npx mocha ./compiled/wrongish.test.js",
     "dev": "nodemon --watch ./src -e raku,md,ts,js,patch -x \"npm run test\""
   },
   "keywords": [
@@ -20,11 +20,10 @@
   "devDependencies": {
     "@types/expect": "^24.3.0",
     "@types/mocha": "^8.0.0",
-    "@types/node": "^14.0.23",
+    "@types/node": "^14.0.26",
     "expect": "^26.1.0",
     "mocha": "^8.0.1",
     "nodemon": "^2.0.4",
-    "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   }
 }

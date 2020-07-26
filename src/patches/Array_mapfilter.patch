@@ -1,5 +1,4 @@
-::host Array
-::hvar <T>
+::host Array<T>
 ::type <S>(func: (x: T) => false | S) => Array<S>
 ::syms mapfilter
 

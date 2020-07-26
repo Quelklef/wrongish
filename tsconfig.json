@@ -2,6 +2,11 @@
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
-    "lib": ["es6"]
-  }
+    "lib": ["es6"],
+    "types": ["mocha"],
+    "moduleResolution": "node",
+  },
+  "include": [
+    "./compiled",
+  ],
 }

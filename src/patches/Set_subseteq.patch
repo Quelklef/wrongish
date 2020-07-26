@@ -1,6 +1,5 @@
-::host Set
-::hvar <T>
-::type (other: Set<T>): boolean
+::host Set<T>
+::type (other: Set<T>) => boolean
 ::syms subsetEq subseteq le leq
 
 ::docn

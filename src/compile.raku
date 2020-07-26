@@ -22,12 +22,38 @@ sub compile {
     
   my @all_syms = @patches.flatmap({ .<syms>.Array }).unique;
 
+  for @patches -> %patch {
+    # vvv add <tvar>, type variable of patch type
+    %patch<tvar> = getTypeVar(%patch<type>);
+    # vvv add <hvar>, type variable on host
+    %patch<hvar> = getTypeVar(%patch<host>.flip).flip;
+    # vvv add <bvar>, combined type variables of host and patch
+    %patch<bvar> = (%patch<tvar> and %patch<hvar>) ?? (%patch<hvar>.substr(0, *-1) ~ ', ' ~ %patch<tvar>.substr(1, *)) !! (%patch<hvar> ~ %patch<tvar>);
+    # vvv strip type variables from <host> and <Type>
+    %patch<type> = %patch<type>.substr(%patch<tvar>.chars);
+    %patch<host> = %patch<host>.flip.substr(%patch<hvar>.chars).flip;
+  }
+
+  sub getTypeVar($type) {
+    # parse and return the type variable from the front of a type (e.g. the <T> in <T>(x: T) => T)
+    # this function is agnostic about which of '<>' is open and which is close
+    return '' if !($type.starts-with('<') or $type.starts-with('>'));
+    my $depth = 0;
+    my @chars = $type.split('')[1..*-1];
+    for @chars.kv -> $idx, $char {
+      next if $idx > 0 and @chars[$idx - 1] eq '=';  # ignore the '>' in fat arrows
+      $depth++ if $char eq '<';
+      $depth-- if $char eq '>';
+      return $type.substr(0, $idx + 1) if $depth == 0;
+    }
+  }
+
   # typescript symbol declarations
   for @all_syms -> $sym {
     if @ts_keywords.contains($sym) {
-      @type_chunks.push("export const \$$sym: unique symbol;  // typescript keyword");
+      @type_chunks.push("export declare const \$$sym: unique symbol;  // typescript keyword");
     } else {
-      @type_chunks.push("export const $sym: unique symbol; export const \$$sym: typeof $sym;");
+      @type_chunks.push("export declare const $sym: unique symbol; export declare const \$$sym: typeof $sym;");
     }
   }
   @type_chunks.push("");
@@ -35,22 +61,16 @@ sub compile {
   # typscript bound declarations
   for @patches -> %patch {
     for %patch<syms>.Array -> $sym {
-      @type_chunks.push("export interface %patch<host>%patch<hvar> \{ [\$$sym]: %patch<type>; \}");
+      @type_chunks.push("export interface %patch<host>%patch<hvar> \{ [\$$sym]: %patch<tvar>%patch<type>; \}");
     }
   }
   @type_chunks.push("");
   
-  # typescript type variables
-  for @patches -> %patch {
-    %patch<typeVarName> = "_%patch<host>_%patch<syms>.join('_')";
-    @type_chunks.push("type %patch<typeVarName> = %patch<type>");
-  }
-  @type_chunks.push("");
-
   # typescript unbound declarations
   for @patches -> %patch {
     for %patch<syms>.Array -> $sym {
-      @type_chunks.push("interface _Unbound \{ $sym%patch<hvar>\(thisArg: _Or\<ThisParameterType\<%patch<typeVarName>>, %patch<host>%patch<hvar>>, ...args: Parameters\<%patch<typeVarName>>): ReturnType\<%patch<typeVarName>>; }");
+      @type_chunks.push("interface __Unbound \{ $sym%patch<bvar>\(\n  thisArg: __Default\<%patch<host>%patch<hvar>, ThisParameterType\<%patch<type>>>,\n  ...args: Parameters\<%patch<type>>\n  ): ReturnType\<%patch<type>>; }");
+      @type_chunks.push("");
     }
   }
   @type_chunks.push("");
@@ -124,11 +144,9 @@ sub parse_patch($file) {
 
   my %patch =
     file => $file,
-    # host type name
+    # host type w/ type variable
     host => get_inline(@lines, "::host"),
-    # host type variable
-    hvar => get_inline(@lines, "::hvar", ''),
-    # method type
+    # method type w/ type variables
     type => get_inline(@lines, "::type"),
     # method symbols
     syms => get_inline(@lines, "::syms").words,

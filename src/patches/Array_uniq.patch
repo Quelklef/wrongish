@@ -1,5 +1,4 @@
-::host Array
-::hvar <T>
+::host Array<T>
 ::type () => Array<T>
 ::syms uniq dedup deduplicated
 

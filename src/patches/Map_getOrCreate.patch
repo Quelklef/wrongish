@@ -1,6 +1,5 @@
-::host Map
-::hvar <K, V>
-::type (key: K, default: V): V
+::host Map<K, V>
+::type (key: K, defaultValue: V) => V
 ::syms getOrCreate
 
 ::docn
