@@ -1,0 +1,34 @@
+::host Set
+::hvar <T>
+::type (other: Set<T>): boolean
+::syms subset lt
+
+::docn
+Is this set `<` another set?
+
+::impl
+function(other) {
+  if (this.size >= other.size)
+    return false;
+
+  for (const item of this)
+    if (!other.has(item))
+      return false
+
+  return true;
+}
+
+::test
+const all = new Set([-2, -1, 0, 1, 2]);
+const mid = new Set([-1, 0, 1]);
+const neg = new Set([-2, -1]);
+const pos = new Set([1, 2]);
+
+expect(all[$.subset](all)).toBe(false);
+expect(mid[$.subset](all)).toBe(true);
+expect(neg[$.subset](all)).toBe(true);
+expect(pos[$.subset](all)).toBe(true);
+
+expect(mid[$.subset](neg)).toBe(false);
+expect(all[$.subset](mid)).toBe(false);
+expect(pos[$.subset](mid)).toBe(false);

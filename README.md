@@ -197,6 +197,42 @@ Type: `Set<T>[$some]: (pred: (item: T) => boolean) => boolean`
 
 Like `Array#some`, but for `Set`
 
+### `Set[$subset]`
+
+Aliases: `$lt` 
+
+
+Type: `Set<T>[$subset]: (other: Set<T>): boolean`
+
+Is this set `<` another set?
+
+### `Set[$subsetEq]`
+
+Aliases: `$subseteq`, `$le`, `$leq` 
+
+
+Type: `Set<T>[$subsetEq]: (other: Set<T>): boolean`
+
+Is this set `<=` another set?
+
+### `Set[$superset]`
+
+Aliases: `$supset`, `$gt` 
+
+
+Type: `Set<T>[$superset]: (other: Set<T>): boolean`
+
+Is this set `>` another set?
+
+### `Set[$supersetEq]`
+
+Aliases: `$supsetEq`, `$supseteq`, `$ge`, `$geq` 
+
+
+Type: `Set<T>[$supersetEq]: (other: Set<T>): boolean`
+
+Is this set `>=` another set?
+
 ### `Set[$union]`
 
 Aliases: `$or` 
