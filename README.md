@@ -100,6 +100,21 @@ Get a value from a map, or create a new one if it doesn't exist.
 
 Return the nearest number in the range `[lo, hi]`.
 
+### `Number [mod] [modulo]`
+
+- type: `Number[mod]: (this: number | Number, by: number) => number`
+
+Modulo by a number.
+
+```js
+M.mod(-2, 3) === 1;
+M.mod(-1, 3) === 2;
+M.mod(0, 3) === 0;
+M.mod(1, 3) === 1;
+M.mod(2, 3) === 2;
+M.mod(3, 3) === 0;
+```
+
 ***
 
 ### `Object [a] [an]`

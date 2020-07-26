@@ -1,0 +1,29 @@
+::host Number
+::type (this: number | Number, by: number) => number
+::syms mod modulo
+
+::docn
+Modulo by a number.
+
+```js
+M.mod(-2, 3) === 1;
+M.mod(-1, 3) === 2;
+M.mod(0, 3) === 0;
+M.mod(1, 3) === 1;
+M.mod(2, 3) === 2;
+M.mod(3, 3) === 0;
+```
+
+::impl
+function(by) {
+  // https://stackoverflow.com/a/4467559/4608364
+  return ((this % by) + by) % by;
+}
+
+::test
+expect(M.mod(-2, 3)).toBe(1);
+expect(M.mod(-1, 3)).toBe(2);
+expect(M.mod(0, 3)).toBe(0);
+expect(M.mod(1, 3)).toBe(1);
+expect(M.mod(2, 3)).toBe(2);
+expect(M.mod(3, 3)).toBe(0);
