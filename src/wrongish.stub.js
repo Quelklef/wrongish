@@ -6,27 +6,31 @@ const __ex = module.exports;
 const __unbound = __ex.unbound = {};
 
 // Symbols: object, name => symbol
-const __symbols = {};
+const __symbols = __ex.__symbols = {};
 
-function __symbol(name, symbol) {
-  __symbols[name] = symbol;
-  const unbound = function(thisArg, ...args) {
+// Patches: list of { host, syms, impl }
+// Used in a test
+const __patches = __ex.__patches = [];
+
+function __symbol(name) {
+  const symbol = __symbols[name] = __ex[name] = __ex['$' + name] = Symbol(name);
+  __unbound[name] = __unbound['$' + name] = unbound;
+  function unbound(thisArg, ...args) {
     const host =
       thisArg === null || thisArg === undefined ? Object
       : Object.getPrototypeOf(thisArg).constructor;
     const impl = host.prototype[symbol];  // Note that this does inheritance for us :)
     if (!impl)
-      throw Error(`Operation $${name} not supported on type ${host.name}`);
+      throw Error(`Operation [${name}] not supported on type ${host.name}`);
     return impl.apply(thisArg, args);
   }
-  __unbound[name] = unbound;
-  __unbound['$' + name] = unbound;
 }
 
 // Apply a patch
 function __patch(host, names, impl) {
-  for (const name of names) {
-    const symbol = __symbols[name];
+  const symbols = names.split(' ').map(name => __symbols[name]);
+  __patches.push({ host, symbols, impl });
+  for (const symbol of symbols) {
     Object.defineProperty(host.prototype, symbol, {
       enumerable: false,
       writable: true,

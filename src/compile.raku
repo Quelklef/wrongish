@@ -77,7 +77,7 @@ sub compile {
 
   # javascript symbol definitions
   for @all_syms -> $sym {
-    @impl_chunks.push("__symbol('$sym', __ex.$sym = __ex.\$$sym = Symbol('$sym'));");
+    @impl_chunks.push("__symbol('$sym');");
   }
   @impl_chunks.push("");
 
@@ -99,14 +99,14 @@ sub compile {
     @docn_chunks.push(%patch<docn>);
 
     # compile implementation
-    my $syms_as_js = '[' ~ %patch<syms>.map({ "'$_'" }).join(", ") ~ ']';
+    my $syms_as_js = '"' ~ %patch<syms>.join(" ") ~ '"';
     @impl_chunks.push("__patch(%patch<host>, $syms_as_js, %patch<impl>);");
     @impl_chunks.push("");
 
     # compile test
     my $header = %patch<test>.contains('it(') ?? 'describe' !! 'it';
     my $async = <await async Promise>.grep({ %patch<test>.contains($_) }) ?? 'async' !! '';
-    @test_chunks.push("$header\('%patch<host>\[$name]', $async () => \{\n%patch<test>.indent(2)\n\});\n".indent(2));
+    @test_chunks.push("$header\('supports %patch<host>\[$name]', $async () => \{\n%patch<test>.indent(2)\n\});\n".indent(2));
     note "Warning: patch %patch<file> has no tests" if %patch<test>.trim eq '';
   }
 

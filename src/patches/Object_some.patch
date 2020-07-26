@@ -1,6 +1,6 @@
 ::host Object
 ::type <T>(this: T | null | undefined, err?: string) => T
-::syms some
+::syms a an
 
 ::docn
 Assert that a value is non-nully.
@@ -16,13 +16,13 @@ function(err) {
 
 ::test
 it("throws on null", () => {
-  expect(() => $.unbound.some(null)).toThrow();
+  expect(() => $.unbound.a(null)).toThrow();
 });
 
 it("throws on undefined", () => {
-  expect(() => $.unbound.some(undefined)).toThrow();
+  expect(() => $.unbound.a(undefined)).toThrow();
 });
 
 it("returns the argument otherwise", () => {
-  expect($.unbound.some('')).toBe('');
+  expect($.unbound.a('')).toBe('');
 });

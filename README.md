@@ -104,6 +104,17 @@ Return the nearest number in the range `[lo, hi]`.
 
 ***
 
+### `Object[$a]`
+
+Aliases: `$an` 
+
+
+Type: `Object[$a]: <T>(this: T | null | undefined, err?: string) => T`
+
+Assert that a value is non-nully.
+
+If the supplied value is `null` or `undefined`, throw an error. Else, return the argument.
+
 ### `Object[$pipe]`
 
 Aliases: `$letIn` 
@@ -122,14 +133,6 @@ const tags = sentence.split(' ')
   .filter(word => word.startsWith('#'))
   [$pipe](tags => new Set(tags));
 ```
-
-### `Object[$some]`
-
-Type: `Object[$some]: <T>(this: T | null | undefined, err?: string) => T`
-
-Assert that a value is non-nully.
-
-If the supplied value is `null` or `undefined`, throw an error. Else, return the argument.
 
 ### `Object[$to]`
 
