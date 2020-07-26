@@ -7,7 +7,7 @@ Map by the given function, and then filter out all values equal to false.
 
 ```js
 const words = ['Hey', '@es6', '@tc39', 'quick', 'question'];
-const ats = words[$mapfilter](word => word.startsWith('@') && word.slice(1));
+const ats = words[W.mapfilter](word => word.startsWith('@') && word.slice(1));
 console.log(ats);  // ['es6', 'tc39']
 ```
 
@@ -26,5 +26,5 @@ function(mapper) {
 
 ::test
 const items = [1, 2, 3, 4, 5];
-const result = items[$.mapfilter](x => x % 2 === 0 && Math.pow(x, 2));
+const result = items[W.mapfilter](x => x % 2 === 0 && Math.pow(x, 2));
 expect(result).toEqual([4, 16]);

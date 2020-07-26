@@ -26,11 +26,12 @@ However, Wrongish is able to sidestep most of the dangers of extending native pr
 
 ```js
 const W = require('wrongish');
+const M = W.unbound;  // an upside-down W
 // All of the following are the same
 obj[W.pipe](func);
 obj[W.$pipe](func);
-W.unbound.pipe(obj, func);
-W.unbound.$pipe(obj, func);
+M.pipe(obj, func);
+M.$pipe(obj, func);
 ```
 
 Onto the methods!

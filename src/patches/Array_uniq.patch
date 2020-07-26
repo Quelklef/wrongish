@@ -7,7 +7,7 @@ Return an array equivalent to this array wherin only the first instance of each 
 
 ```js
 const letters = Array.from('Mississippi');
-const uniqd = letters[$uniq]().join('');
+const uniqd = letters[W.uniq]().join('');
 console.log(uniqd); // 'Misp'
 ```
 
@@ -26,5 +26,5 @@ function() {
 
 ::test
 const letters = Array.from('Mississippi');
-const uniqd = letters[$.uniq]().join('');
+const uniqd = letters[W.uniq]().join('');
 expect(uniqd).toBe('Misp');

@@ -3,7 +3,7 @@
 ::syms filter
 
 ::docn
-Like `Array$filter`, but for `Set`.
+Like `Array#filter`, but for `Set`.
 
 ::impl
 function(pred) {
@@ -16,5 +16,5 @@ function(pred) {
 
 ::test
 const items = new Set([1, 2, 3, 4]);
-const evens = items[$.filter](x => x % 2 === 0);
+const evens = items[W.filter](x => x % 2 === 0);
 expect(evens).toStrictEqual(new Set([2, 4]));

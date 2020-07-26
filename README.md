@@ -26,103 +26,95 @@ However, Wrongish is able to sidestep most of the dangers of extending native pr
 
 ```js
 const W = require('wrongish');
+const M = W.unbound;  // an upside-down W
 // All of the following are the same
 obj[W.pipe](func);
 obj[W.$pipe](func);
-W.unbound.pipe(obj, func);
-W.unbound.$pipe(obj, func);
+M.pipe(obj, func);
+M.$pipe(obj, func);
 ```
 
 Onto the methods!
 
 ***
 
-### `Array[$mapfilter]`
+### `Array [mapfilter]`
 
-Type: `Array<T>[$mapfilter]: <S>(func: (x: T) => false | S) => Array<S>`
+- type: `Array<T>[mapfilter]: <S>(func: (x: T) => false | S) => Array<S>`
 
 Map by the given function, and then filter out all values equal to false.
 
 ```js
 const words = ['Hey', '@es6', '@tc39', 'quick', 'question'];
-const ats = words[$mapfilter](word => word.startsWith('@') && word.slice(1));
+const ats = words[W.mapfilter](word => word.startsWith('@') && word.slice(1));
 console.log(ats);  // ['es6', 'tc39']
 ```
 
 Falsy values which are not equal to the value false are kept.
 
-### `Array[$uniq]`
+### `Array [uniq] [dedup] [deduplicated]`
 
-Aliases: `$dedup`, `$deduplicated` 
-
-
-Type: `Array<T>[$uniq]: () => Array<T>`
+- type: `Array<T>[uniq]: () => Array<T>`
 
 Return an array equivalent to this array wherin only the first instance of each element is kept.
 
 ```js
 const letters = Array.from('Mississippi');
-const uniqd = letters[$uniq]().join('');
+const uniqd = letters[W.uniq]().join('');
 console.log(uniqd); // 'Misp'
 ```
 
 ***
 
-### `Function[$debounce]`
+### `Function [debounce]`
 
-Type: `Function[$debounce]: <F extends (...args: any[]) => void>(this: F, delay: number) => F`
+- type: `Function[debounce]: <F extends (...args: any[]) => void>(this: F, delay: number) => F`
 
 Collapses calls within `delay` milliseconds of each other into a single call.
 
-### `Function[$throttle]`
+### `Function [throttle]`
 
-Type: `Function[$throttle]: <F extends (...args: any[]) => void>(this: F, delay: number) => F`
+- type: `Function[throttle]: <F extends (...args: any[]) => void>(this: F, delay: number) => F`
 
 Restrict a function to only run once every `delay` milliseconds.
 
 ***
 
-### `Map[$getOr]`
+### `Map [getOr]`
 
-Type: `Map<K, V>[$getOr]: <Alt>(key: K, alt: Alt) => V | Alt`
+- type: `Map<K, V>[getOr]: <Alt>(key: K, alt: Alt) => V | Alt`
 
 Return a value from a map, if it exists, or an alternative value
 
-### `Map[$getOrCreate]`
+### `Map [getOrCreate]`
 
-Type: `Map<K, V>[$getOrCreate]: (key: K, defaultValue: V) => V`
+- type: `Map<K, V>[getOrCreate]: (key: K, defaultValue: V) => V`
 
 Get a value from a map, or create a new one if it doesn't exist.
 
 ***
 
-### `Number[$clamp]`
+### `Number [clamp]`
 
-Type: `Number[$clamp]: (this: number | Number, lo: number, hi: number) => number`
+- type: `Number[clamp]: (this: number | Number, lo: number, hi: number) => number`
 
 Return the nearest number in the range `[lo, hi]`.
 
 ***
 
-### `Object[$a]`
+### `Object [a] [an]`
 
-Aliases: `$an` 
-
-
-Type: `Object[$a]: <T>(this: T | null | undefined, err?: string) => T`
+- type: `Object[a]: <T>(this: T | null | undefined, err?: string) => T`
 
 Assert that a value is non-nully.
 
 If the supplied value is `null` or `undefined`, throw an error. Else, return the argument.
 
-### `Object[$pipe]`
+### `Object [pipe] [letIn]`
 
-Aliases: `$letIn` 
+- type: `Object[pipe]: <T, R>(this: T, func: (me: T) => R) => R`
 
-
-Type: `Object[$pipe]: <R>(func: (me: Object) => R) => R`
-
-Pass the object into a function: `obj[$pipe](func)` is the same as `func(object)`.
+Pass the object into a function: `obj[W.pipe](func)` is the same as `func(object)`.
 
 This is useful e.g. in FP chains:
 
@@ -131,15 +123,12 @@ const sentence = "At the beach #beachlife #livelaughlove";
 const tags = sentence.split(' ')
   .map(word => word.strim())
   .filter(word => word.startsWith('#'))
-  [$pipe](tags => new Set(tags));
+  [W.pipe](tags => new Set(tags));
 ```
 
-### `Object[$to]`
+### `Object [to] [as]`
 
-Aliases: `$as` 
-
-
-Type: `Object[$to]: <T>(targetConstructor: Function) => T`
+- type: `Object[to]: <T>(targetConstructor: Function) => T`
 
 Converts an object of one type to another type.
 
@@ -149,110 +138,86 @@ Supported conversions:
 
 ```js
 const items = [1, 1, 2, 2, 3, 3];
-const uniq = items[$to](Set)[$to](Array);
+const uniq = items[W.to](Set)[W.to](Array);
 console.log(uniq);  // [1, 2, 3]
 ```
 
 ***
 
-### `Set[$every]`
+### `Set [every] [all]`
 
-Aliases: `$all` 
-
-
-Type: `Set<T>[$every]: (pred: (item: T) => boolean) => boolean`
+- type: `Set<T>[every]: (pred: (item: T) => boolean) => boolean`
 
 Like `Array#every`, but for `Set`.
 
-### `Set[$filter]`
+### `Set [filter]`
 
-Type: `Set<T>[$filter]: (pred: (item: T) => boolean) => Set<T>`
+- type: `Set<T>[filter]: (pred: (item: T) => boolean) => Set<T>`
 
-Like `Array$filter`, but for `Set`.
+Like `Array#filter`, but for `Set`.
 
-### `Set[$intersect]`
+### `Set [intersect] [and]`
 
-Aliases: `$and` 
-
-
-Type: `Set<T>[$intersect]: (other: Set<T>) => Set<T>`
+- type: `Set<T>[intersect]: (other: Set<T>) => Set<T>`
 
 Set intersection.
 
-### `Set[$map]`
+### `Set [map]`
 
-Type: `Set<T>[$map]: <S>(mapper: (item: T) => S) => Set<S>`
+- type: `Set<T>[map]: <S>(mapper: (item: T) => S) => Set<S>`
 
 Like `Array#map`, but for `Set`
 
-### `Set[$minus]`
+### `Set [minus]`
 
-Type: `Set<T>[$minus]: (other: Set<T>) => Set<T>`
+- type: `Set<T>[minus]: (other: Set<T>) => Set<T>`
 
 Set subtraction.
 
-### `Set[$some]`
+### `Set [some] [any]`
 
-Aliases: `$any` 
-
-
-Type: `Set<T>[$some]: (pred: (item: T) => boolean) => boolean`
+- type: `Set<T>[some]: (pred: (item: T) => boolean) => boolean`
 
 Like `Array#some`, but for `Set`
 
-### `Set[$subset]`
+### `Set [subset] [lt]`
 
-Aliases: `$lt` 
-
-
-Type: `Set<T>[$subset]: (other: Set<T>) => boolean`
+- type: `Set<T>[subset]: (other: Set<T>) => boolean`
 
 Is this set `<` another set?
 
-### `Set[$subsetEq]`
+### `Set [subsetEq] [subseteq] [le] [leq]`
 
-Aliases: `$subseteq`, `$le`, `$leq` 
-
-
-Type: `Set<T>[$subsetEq]: (other: Set<T>) => boolean`
+- type: `Set<T>[subsetEq]: (other: Set<T>) => boolean`
 
 Is this set `<=` another set?
 
-### `Set[$superset]`
+### `Set [superset] [supset] [gt]`
 
-Aliases: `$supset`, `$gt` 
-
-
-Type: `Set<T>[$superset]: (other: Set<T>) => boolean`
+- type: `Set<T>[superset]: (other: Set<T>) => boolean`
 
 Is this set `>` another set?
 
-### `Set[$supersetEq]`
+### `Set [supersetEq] [supsetEq] [supseteq] [ge] [geq]`
 
-Aliases: `$supsetEq`, `$supseteq`, `$ge`, `$geq` 
-
-
-Type: `Set<T>[$supersetEq]: (other: Set<T>) => boolean`
+- type: `Set<T>[supersetEq]: (other: Set<T>) => boolean`
 
 Is this set `>=` another set?
 
-### `Set[$union]`
+### `Set [union] [or]`
 
-Aliases: `$or` 
-
-
-Type: `Set<T>[$union]: (other: Set<T>) => Set<T>`
+- type: `Set<T>[union]: (other: Set<T>) => Set<T>`
 
 Set union
 
-### `Set[$with]`
+### `Set [with]`
 
-Type: `Set<T>[$with]: (item: T) => Set<T>`
+- type: `Set<T>[with]: (item: T) => Set<T>`
 
 Add an item to a set.
 
-### `Set[$without]`
+### `Set [without]`
 
-Type: `Set<T>[$without]: (item: T) => Set<T>`
+- type: `Set<T>[without]: (item: T) => Set<T>`
 
 Remove an item from a set.

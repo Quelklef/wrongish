@@ -69,6 +69,7 @@ sub compile {
   # typescript unbound declarations
   for @patches -> %patch {
     for %patch<syms>.Array -> $sym {
+      @type_chunks.push("interface __Unbound \{ \$$sym: __Unbound['$sym']; }");
       @type_chunks.push("interface __Unbound \{ $sym%patch<bvar>\(\n  thisArg: __Default\<%patch<host>%patch<hvar>, ThisParameterType\<%patch<type>>>,\n  ...args: Parameters\<%patch<type>>\n  ): ReturnType\<%patch<type>>; }");
       @type_chunks.push("");
     }
@@ -90,12 +91,8 @@ sub compile {
 
     # compile documentation
     @docn_chunks.push('***') if $host_change;
-    @docn_chunks.push("### `%patch<host>\[\$$name]`");
-    if %patch<syms>.elems > 1 {
-      my $aliases_str = @aliases.map({ "`\$$_`" }).join(", ");
-      @docn_chunks.push("Aliases: $aliases_str \n");
-    }
-    @docn_chunks.push("Type: `%patch<host>%patch<hvar>\[\$$name]: %patch<tvar>%patch<type>`");
+    @docn_chunks.push("### `%patch<host> " ~ %patch<syms>.map({ "[$_]" }).join(' ') ~"`");
+    @docn_chunks.push("- type: `%patch<host>%patch<hvar>\[$name]: %patch<tvar>%patch<type>`");
     @docn_chunks.push(%patch<docn>);
 
     # compile implementation

@@ -12,4 +12,4 @@ function(item) {
 
 ::test
 const items = new Set([1, 2]);
-expect(items[$.$with](3)).toStrictEqual(new Set([1, 2, 3]));
+expect(items[W.$with](3)).toStrictEqual(new Set([1, 2, 3]));

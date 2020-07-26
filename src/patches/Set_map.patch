@@ -15,5 +15,5 @@ function(mapper) {
 
 ::test
 const items = new Set([1, 2, 3, 4, 5]);
-const result = items[$.map](x => Math.pow(x, 2));
+const result = items[W.map](x => Math.pow(x, 2));
 expect(result).toEqual(new Set([1, 4, 9, 16, 25]));

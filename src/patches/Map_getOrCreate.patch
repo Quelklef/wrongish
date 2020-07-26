@@ -17,5 +17,5 @@ function(key, deflt) {
 
 ::test
 const m = new Map();
-expect(m[$.getOrCreate]('x', 'y')).toBe('y');
-expect(m[$.getOrCreate]('x', 'z')).toBe('y');
+expect(m[W.getOrCreate]('x', 'y')).toBe('y');
+expect(m[W.getOrCreate]('x', 'z')).toBe('y');

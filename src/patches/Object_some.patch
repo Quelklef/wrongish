@@ -10,19 +10,19 @@ If the supplied value is `null` or `undefined`, throw an error. Else, return the
 ::impl
 function(err) {
   if (this === null || this === undefined)
-    throw Error(err || `some(${this})`);
+    throw Error(err || `some(W.{this})`);
   return this;
 }
 
 ::test
 it("throws on null", () => {
-  expect(() => $.unbound.a(null)).toThrow();
+  expect(() => M.a(null)).toThrow();
 });
 
 it("throws on undefined", () => {
-  expect(() => $.unbound.a(undefined)).toThrow();
+  expect(() => M.a(undefined)).toThrow();
 });
 
 it("returns the argument otherwise", () => {
-  expect($.unbound.a('')).toBe('');
+  expect(M.a('')).toBe('');
 });

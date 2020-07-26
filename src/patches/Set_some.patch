@@ -15,6 +15,6 @@ function(pred) {
 
 ::test
 const items = new Set([-1, 0, 1]);
-expect(items[$.some](x => x === 0)).toBe(true);
-expect(items[$.some](x => x >= 0)).toBe(true);
-expect(items[$.some](x => x >= 2)).toBe(false);
+expect(items[W.some](x => x === 0)).toBe(true);
+expect(items[W.some](x => x >= 0)).toBe(true);
+expect(items[W.some](x => x >= 2)).toBe(false);

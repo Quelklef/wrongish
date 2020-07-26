@@ -33,7 +33,7 @@ return new Promise(resolve => {
   let called = 0;
   const inc: () => void = () => called++;
 
-  const th: typeof inc = inc[$.throttle](50);
+  const th: typeof inc = inc[W.throttle](50);
 
   const ivl = setInterval(th, 10);
   setTimeout(finish, 125);

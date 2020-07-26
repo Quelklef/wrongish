@@ -23,11 +23,11 @@ const mid = new Set([-1, 0, 1]);
 const neg = new Set([-2, -1]);
 const pos = new Set([1, 2]);
 
-expect(all[$.supset](all)).toBe(false);
-expect(all[$.supset](mid)).toBe(true);
-expect(all[$.supset](neg)).toBe(true);
-expect(all[$.supset](pos)).toBe(true);
+expect(all[W.supset](all)).toBe(false);
+expect(all[W.supset](mid)).toBe(true);
+expect(all[W.supset](neg)).toBe(true);
+expect(all[W.supset](pos)).toBe(true);
 
-expect(neg[$.supset](mid)).toBe(false);
-expect(mid[$.supset](all)).toBe(false);
-expect(mid[$.supset](pos)).toBe(false);
+expect(neg[W.supset](mid)).toBe(false);
+expect(mid[W.supset](all)).toBe(false);
+expect(mid[W.supset](pos)).toBe(false);

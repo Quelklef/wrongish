@@ -1,9 +1,9 @@
 ::host Object
 ::syms pipe letIn
-::type <R>(func: (me: Object) => R) => R
+::type <T, R>(this: T, func: (me: T) => R) => R
 
 ::docn
-Pass the object into a function: `obj[$pipe](func)` is the same as `func(object)`.
+Pass the object into a function: `obj[W.pipe](func)` is the same as `func(object)`.
 
 This is useful e.g. in FP chains:
 
@@ -12,7 +12,7 @@ const sentence = "At the beach #beachlife #livelaughlove";
 const tags = sentence.split(' ')
   .map(word => word.strim())
   .filter(word => word.startsWith('#'))
-  [$pipe](tags => new Set(tags));
+  [W.pipe](tags => new Set(tags));
 ```
 
 ::impl
@@ -22,5 +22,5 @@ function(func) {
 
 ::test
 const obj = { x: 2, y: 4 };
-const result = obj[$.pipe](({ x, y }) => x * y);
+const result = obj[W.pipe](({ x, y }) => x * y);
 expect(result).toBe(8);

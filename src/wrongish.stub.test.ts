@@ -1,5 +1,7 @@
 
-import * as $ from './wrongish';
+import * as W from './wrongish';
+const M = W.unbound;
+
 import expect from 'expect';
 
 describe('wrongish', () => {
@@ -8,32 +10,29 @@ describe('wrongish', () => {
 
     const arr = [1, 2, 3];
     const set = new Set(arr);
-    const size = x => x.length !== undefined ? x.length : x.size;
+    
+    function size<T>(x: Array<T> | Set<T>): number {
+      return x instanceof Array ? x.length : x.size;
+    }
 
     it('bound, unprefixed', () => {
-      const { pipe } = require('./wrongish');
-      // @ts-ignore
-      expect(arr[pipe](size)).toBe(3);
-      expect(set[pipe](size)).toBe(3);
+      expect(arr[W.pipe](size)).toBe(3);
+      expect(set[W.pipe](size)).toBe(3);
     });
 
     it('bound, prefixed', () => {
-      const { $pipe } = require('./wrongish');
-      // @ts-ignore
-      expect(arr[$pipe](size)).toBe(3);
-      expect(set[$pipe](size)).toBe(3);
+      expect(arr[W.$pipe](size)).toBe(3);
+      expect(set[W.$pipe](size)).toBe(3);
     });
 
     it('unbound, unprefixed', () => {
-      const { unbound: { pipe } } = require('./wrongish');
-      expect(pipe(arr, size)).toBe(3);
-      expect(pipe(set, size)).toBe(3);
+      expect(M.pipe(arr, size)).toBe(3);
+      expect(M.pipe(set, size)).toBe(3);
     });
     
     it('unbound, prefixed', () => {
-      const { unbound: { $pipe } } = require('./wrongish');
-      expect($pipe(arr, size)).toBe(3);
-      expect($pipe(set, size)).toBe(3);
+      expect(M.$pipe(arr, size)).toBe(3);
+      expect(M.$pipe(set, size)).toBe(3);
     });
     
   });
@@ -51,7 +50,7 @@ describe('wrongish', () => {
     }
     
     const errs = [];
-    for (const { host, symbols } of ($ as any).__patches) {
+    for (const { host, symbols } of (W as any).__patches) {
       for (const symbol of symbols) {
         const shadowing = protos(host).filter(proto => proto.hasOwnProperty(symbol));
         const strSym = symbol.toString().slice(7, -1);

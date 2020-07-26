@@ -19,5 +19,5 @@ function(other) {
 ::test
 const A = new Set([-1, 0]);
 const B = new Set([0, 1]);
-const AnB = A[$.intersect](B);
+const AnB = A[W.intersect](B);
 expect(AnB).toStrictEqual(new Set([0]));

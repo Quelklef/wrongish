@@ -12,7 +12,7 @@ Supported conversions:
 
 ```js
 const items = [1, 1, 2, 2, 3, 3];
-const uniq = items[$to](Set)[$to](Array);
+const uniq = items[W.to](Set)[W.to](Array);
 console.log(uniq);  // [1, 2, 3]
 ```
 
@@ -24,14 +24,14 @@ function(toType) {
     return new Set(this);
   if (Symbol.iterator in this && toType === Array)
     return Array.from(this);
-  throw Error(`Unknown conversion ${fromType.name} to ${toType.name}.`);
+  throw Error(`Unknown conversion {fromType.name} to {toType.name}.`);
 }
 
 ::test
 
 it('Iterable (Array) -> Set', () => {
   const items = [1, 1, 2, 2, 3, 3];
-  const set = items[$.to](Set);
+  const set = items[W.to](Set);
   expect(set).toEqual(new Set([1, 2, 3]));
 });
 
@@ -41,12 +41,12 @@ it('Iterable (generator) -> Set', () => {
     yield 2; yield 2;
     yield 3; yield 3;
   }
-  const set = gen()[$.to](Set);
+  const set = gen()[W.to](Set);
   expect(set).toEqual(new Set([1, 2, 3]));
 });
 
 it('Iterable (Set) -> Array', () => {
   const items = new Set([1, 2, 3]);
-  const array = items[$.to](Array);
+  const array = items[W.to](Array);
   expect(array).toEqual([1, 2, 3]);
 });

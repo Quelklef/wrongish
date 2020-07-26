@@ -15,5 +15,5 @@ function(key, alt) {
 ::test
 const m = new Map();
 m.set(1, 2);
-expect(m[$.getOr](1, -1)).toBe(2);
-expect(m[$.getOr](2, -1)).toBe(-1);
+expect(m[W.getOr](1, -1)).toBe(2);
+expect(m[W.getOr](2, -1)).toBe(-1);
