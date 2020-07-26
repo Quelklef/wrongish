@@ -39,7 +39,7 @@ Onto the methods!
 
 ### `Array[$mapfilter]`
 
-Type: `Array<T>[$mapfilter]: (func: (x: T) => false | S) => Array<S>`
+Type: `Array<T>[$mapfilter]: <S>(func: (x: T) => false | S) => Array<S>`
 
 Map by the given function, and then filter out all values equal to false.
 
@@ -70,13 +70,13 @@ console.log(uniqd); // 'Misp'
 
 ### `Function[$debounce]`
 
-Type: `Function[$debounce]: (this: F, delay: number) => F`
+Type: `Function[$debounce]: <F extends (...args: any[]) => void>(this: F, delay: number) => F`
 
 Collapses calls within `delay` milliseconds of each other into a single call.
 
 ### `Function[$throttle]`
 
-Type: `Function[$throttle]: (this: F, delay: number) => F`
+Type: `Function[$throttle]: <F extends (...args: any[]) => void>(this: F, delay: number) => F`
 
 Restrict a function to only run once every `delay` milliseconds.
 
@@ -84,7 +84,7 @@ Restrict a function to only run once every `delay` milliseconds.
 
 ### `Map[$getOr]`
 
-Type: `Map<K, V>[$getOr]: (key: K, alt: Alt) => V | Alt`
+Type: `Map<K, V>[$getOr]: <Alt>(key: K, alt: Alt) => V | Alt`
 
 Return a value from a map, if it exists, or an alternative value
 
@@ -109,7 +109,7 @@ Return the nearest number in the range `[lo, hi]`.
 Aliases: `$letIn` 
 
 
-Type: `Object[$pipe]: (func: (me: Object) => R) => R`
+Type: `Object[$pipe]: <R>(func: (me: Object) => R) => R`
 
 Pass the object into a function: `obj[$pipe](func)` is the same as `func(object)`.
 
@@ -125,7 +125,7 @@ const tags = sentence.split(' ')
 
 ### `Object[$some]`
 
-Type: `Object[$some]: (this: T | null | undefined, err?: string) => T`
+Type: `Object[$some]: <T>(this: T | null | undefined, err?: string) => T`
 
 Assert that a value is non-nully.
 
@@ -136,7 +136,7 @@ If the supplied value is `null` or `undefined`, throw an error. Else, return the
 Aliases: `$as` 
 
 
-Type: `Object[$to]: (targetConstructor: Function) => T`
+Type: `Object[$to]: <T>(targetConstructor: Function) => T`
 
 Converts an object of one type to another type.
 
@@ -178,7 +178,7 @@ Set intersection.
 
 ### `Set[$map]`
 
-Type: `Set<T>[$map]: (mapper: (item: T) => S) => Set<S>`
+Type: `Set<T>[$map]: <S>(mapper: (item: T) => S) => Set<S>`
 
 Like `Array#map`, but for `Set`
 

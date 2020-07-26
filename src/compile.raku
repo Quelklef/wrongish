@@ -95,7 +95,7 @@ sub compile {
       my $aliases_str = @aliases.map({ "`\$$_`" }).join(", ");
       @docn_chunks.push("Aliases: $aliases_str \n");
     }
-    @docn_chunks.push("Type: `%patch<host>%patch<hvar>\[\$$name]: %patch<type>`");
+    @docn_chunks.push("Type: `%patch<host>%patch<hvar>\[\$$name]: %patch<tvar>%patch<type>`");
     @docn_chunks.push(%patch<docn>);
 
     # compile implementation
