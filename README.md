@@ -52,6 +52,18 @@ console.log(ats);  // ['es6', 'tc39']
 
 Falsy values which are not equal to the value false are kept.
 
+### `Array [sortBy]`
+
+- type: `Array<T>[sortBy]: (key: (item: T) => number) => Array<T>`
+
+Sort an array by a particular key. Creates a new array.
+
+```js
+const items = ['am', 'I', 'wrong'];
+const sorted = items[W.sortBy](word => word.length);
+console.log(sorted.join(' ') + '.');  // "I am wrong."
+```
+
 ### `Array [uniq] [dedup] [deduplicated]`
 
 - type: `Array<T>[uniq]: () => Array<T>`

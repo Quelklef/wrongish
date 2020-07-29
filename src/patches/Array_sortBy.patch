@@ -1,0 +1,23 @@
+::host Array<T>
+::type (key: (item: T) => number) => Array<T>
+::syms sortBy
+
+::docn
+Sort an array by a particular key. Creates a new array.
+
+```js
+const items = ['am', 'I', 'wrong'];
+const sorted = items[W.sortBy](word => word.length);
+console.log(sorted.join(' ') + '.');  // "I am wrong."
+```
+
+::impl
+function(key) {
+  return [...this].sort((a, b) => key(a) - key(b));
+}
+
+::test
+const items = ['am', 'I', 'wrong'];
+const sorted = items[W.sortBy](word => word.length);
+expect(sorted.join(' ') + '.').toBe("I am wrong.");
+expect(items[0]).toBe('am');  // Don't mutate original array
