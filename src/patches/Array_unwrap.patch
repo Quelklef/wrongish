@@ -1,0 +1,18 @@
+::host Array<T>
+::type () => T
+::syms unwrap only
+
+::docn
+Return the only item in the array, if there is exactly one; else, throw an error.
+
+::impl
+function() {
+  if (this.length === 1)
+    return this[0];
+  throw Error(`Array#[unwrap] called on Array with length ${this.length}`);
+}
+
+::test
+expect([0][W.unwrap]()).toBe(0);
+expect(() => [][W.unwrap]()).toThrow();
+expect(() => [1, 2][W.unwrap]()).toThrow();

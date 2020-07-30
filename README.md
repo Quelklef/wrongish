@@ -76,6 +76,12 @@ const uniqd = letters[W.uniq]().join('');
 console.log(uniqd); // 'Misp'
 ```
 
+### `Array#[unwrap, only]`
+
+- type: `Array<T>[unwrap]: () => T`
+
+Return the only item in the array, if there is exactly one; else, throw an error.
+
 ***
 
 ### `Function#[debounce]`
