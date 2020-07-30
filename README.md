@@ -38,7 +38,7 @@ Onto the methods!
 
 ***
 
-### `Array [mapfilter]`
+### `Array#[mapfilter]`
 
 - type: `Array<T>[mapfilter]: <S>(func: (x: T) => false | S) => Array<S>`
 
@@ -52,7 +52,7 @@ console.log(ats);  // ['es6', 'tc39']
 
 Falsy values which are not equal to the value false are kept.
 
-### `Array [sortBy]`
+### `Array#[sortBy]`
 
 - type: `Array<T>[sortBy]: (key: (item: T) => number) => Array<T>`
 
@@ -64,7 +64,7 @@ const sorted = items[W.sortBy](word => word.length);
 console.log(sorted.join(' ') + '.');  // "I am wrong."
 ```
 
-### `Array [uniq] [dedup] [deduplicated]`
+### `Array#[uniq, dedup, deduplicated]`
 
 - type: `Array<T>[uniq]: () => Array<T>`
 
@@ -78,13 +78,13 @@ console.log(uniqd); // 'Misp'
 
 ***
 
-### `Function [debounce]`
+### `Function#[debounce]`
 
 - type: `Function[debounce]: <F extends (...args: any[]) => void>(this: F, delay: number) => F`
 
 Collapses calls within `delay` milliseconds of each other into a single call.
 
-### `Function [throttle]`
+### `Function#[throttle]`
 
 - type: `Function[throttle]: <F extends (...args: any[]) => void>(this: F, delay: number) => F`
 
@@ -92,13 +92,13 @@ Restrict a function to only run once every `delay` milliseconds.
 
 ***
 
-### `Map [getOr]`
+### `Map#[getOr]`
 
 - type: `Map<K, V>[getOr]: <Alt>(key: K, alt: Alt) => V | Alt`
 
 Return a value from a map, if it exists, or an alternative value
 
-### `Map [getOrCreate]`
+### `Map#[getOrCreate]`
 
 - type: `Map<K, V>[getOrCreate]: (key: K, defaultValue: V) => V`
 
@@ -106,13 +106,13 @@ Get a value from a map, or create a new one if it doesn't exist.
 
 ***
 
-### `Number [clamp]`
+### `Number#[clamp]`
 
 - type: `Number[clamp]: (this: number | Number, lo: number, hi: number) => number`
 
 Return the nearest number in the range `[lo, hi]`.
 
-### `Number [mod] [modulo]`
+### `Number#[mod, modulo]`
 
 - type: `Number[mod]: (this: number | Number, by: number) => number`
 
@@ -129,7 +129,7 @@ M.mod(3, 3) === 0;
 
 ***
 
-### `Object [a] [an]`
+### `Object#[a, an]`
 
 - type: `Object[a]: <T>(this: T | null | undefined, err?: string) => T`
 
@@ -137,13 +137,13 @@ Assert that a value is non-nully.
 
 If the supplied value is `null` or `undefined`, throw an error. Else, return the argument.
 
-### `Object [chain]`
+### `Object#[chain]`
 
 - type: `Object[chain]: <T, R>(this: T, func: (me: T) => R) => T extends null ? null : T extends undefined ? undefined : R`
 
 Like `Object#[pipe]`, unless the input is `null` or `undefined`, in which case it returns the input.
 
-### `Object [pipe] [letIn]`
+### `Object#[pipe, letIn]`
 
 - type: `Object[pipe]: <T, R>(this: T, func: (me: T) => R) => R`
 
@@ -159,7 +159,7 @@ const tags = sentence.split(' ')
   [W.pipe](tags => new Set(tags));
 ```
 
-### `Object [to] [as]`
+### `Object#[to, as]`
 
 - type: `Object[to]: <T>(targetConstructor: Function) => T`
 
@@ -177,79 +177,79 @@ console.log(uniq);  // [1, 2, 3]
 
 ***
 
-### `Set [every] [all]`
+### `Set#[every, all]`
 
 - type: `Set<T>[every]: (pred: (item: T) => boolean) => boolean`
 
 Like `Array#every`, but for `Set`.
 
-### `Set [filter]`
+### `Set#[filter]`
 
 - type: `Set<T>[filter]: (pred: (item: T) => boolean) => Set<T>`
 
 Like `Array#filter`, but for `Set`.
 
-### `Set [intersect] [and]`
+### `Set#[intersect, and]`
 
 - type: `Set<T>[intersect]: (other: Set<T>) => Set<T>`
 
 Set intersection.
 
-### `Set [map]`
+### `Set#[map]`
 
 - type: `Set<T>[map]: <S>(mapper: (item: T) => S) => Set<S>`
 
 Like `Array#map`, but for `Set`
 
-### `Set [minus]`
+### `Set#[minus]`
 
 - type: `Set<T>[minus]: (other: Set<T>) => Set<T>`
 
 Set subtraction.
 
-### `Set [some] [any]`
+### `Set#[some, any]`
 
 - type: `Set<T>[some]: (pred: (item: T) => boolean) => boolean`
 
 Like `Array#some`, but for `Set`
 
-### `Set [subset] [lt]`
+### `Set#[subset, lt]`
 
 - type: `Set<T>[subset]: (other: Set<T>) => boolean`
 
 Is this set `<` another set?
 
-### `Set [subsetEq] [subseteq] [le] [leq]`
+### `Set#[subsetEq, subseteq, le, leq]`
 
 - type: `Set<T>[subsetEq]: (other: Set<T>) => boolean`
 
 Is this set `<=` another set?
 
-### `Set [superset] [supset] [gt]`
+### `Set#[superset, supset, gt]`
 
 - type: `Set<T>[superset]: (other: Set<T>) => boolean`
 
 Is this set `>` another set?
 
-### `Set [supersetEq] [supsetEq] [supseteq] [ge] [geq]`
+### `Set#[supersetEq, supsetEq, supseteq, ge, geq]`
 
 - type: `Set<T>[supersetEq]: (other: Set<T>) => boolean`
 
 Is this set `>=` another set?
 
-### `Set [union] [or]`
+### `Set#[union, or]`
 
 - type: `Set<T>[union]: (other: Set<T>) => Set<T>`
 
 Set union
 
-### `Set [with]`
+### `Set#[with]`
 
 - type: `Set<T>[with]: (item: T) => Set<T>`
 
 Add an item to a set.
 
-### `Set [without]`
+### `Set#[without]`
 
 - type: `Set<T>[without]: (item: T) => Set<T>`
 

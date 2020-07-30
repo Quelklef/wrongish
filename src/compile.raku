@@ -91,7 +91,7 @@ sub compile {
 
     # compile documentation
     @docn_chunks.push('***') if $host_change;
-    @docn_chunks.push("### `%patch<host> " ~ %patch<syms>.map({ "[$_]" }).join(' ') ~"`");
+    @docn_chunks.push("### `%patch<host>#[" ~ %patch<syms>.join(', ') ~"]`");
     @docn_chunks.push("- type: `%patch<host>%patch<hvar>\[$name]: %patch<tvar>%patch<type>`");
     @docn_chunks.push(%patch<docn>);
 
@@ -103,7 +103,7 @@ sub compile {
     # compile test
     my $header = %patch<test>.contains('it(') ?? 'describe' !! 'it';
     my $async = <await async Promise>.grep({ %patch<test>.contains($_) }) ?? 'async' !! '';
-    @test_chunks.push("$header\('supports %patch<host>\[$name]', $async () => \{\n%patch<test>.indent(2)\n\});\n".indent(2));
+    @test_chunks.push("$header\('supports %patch<host>#\[$name]', $async () => \{\n%patch<test>.indent(2)\n\});\n".indent(2));
     note "Warning: patch %patch<file> has no tests" if %patch<test>.trim eq '';
   }
 
