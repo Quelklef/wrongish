@@ -137,6 +137,12 @@ Assert that a value is non-nully.
 
 If the supplied value is `null` or `undefined`, throw an error. Else, return the argument.
 
+### `Object [chain]`
+
+- type: `Object[chain]: <T, R>(this: T, func: (me: T) => R) => T extends null ? null : T extends undefined ? undefined : R`
+
+Like `Object#[pipe]`, unless the input is `null` or `undefined`, in which case it returns the input.
+
 ### `Object [pipe] [letIn]`
 
 - type: `Object[pipe]: <T, R>(this: T, func: (me: T) => R) => R`

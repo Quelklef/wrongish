@@ -1,0 +1,19 @@
+::host Object
+::type <T, R>(this: T, func: (me: T) => R) => T extends null ? null : T extends undefined ? undefined : R
+::syms chain
+
+::docn
+Like `Object#[pipe]`, unless the input is `null` or `undefined`, in which case it returns the input.
+
+::impl
+function(func) {
+  if (this === null || this === undefined)
+    return this;
+  return func(this);
+}
+
+::test
+const f = (x: number) => x * 2;
+expect(M.chain(null, f)).toBe(null);
+expect(M.chain(undefined, f)).toBe(undefined);
+expect(M.chain(10, f)).toBe(20);
