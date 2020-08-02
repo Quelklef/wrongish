@@ -1,0 +1,71 @@
+::host Array<T>
+::type (kind: Function | 'string' | 'number' | 'bigint' | 'boolean' | 'symbol') => Array<typeof kind extends Function ? typeof kind : typeof kind extends 'string' ? string : typeof kind extends 'number' ? number : typeof kind extends 'bigint' ? bigint : typeof kind extends 'boolean' ? boolean : typeof kind extends 'symbol' ? symbol : never>
+::syms filterIsA filterIs filterOf filterInstanceOf filterTypeof
+
+::docn
+This method has two different funcionalities:
+
+1. If given a constructor function, filter to instances of the constructor
+2. If given a string, filter to elements whos `typeof` returns the string
+
+Useful because Typescript doesn't realize that `xs.filter(x => x instanceof Y)` is an `Array<Y>` or that `[1, 's'].filter(x => typeof x === 'number')` is an `Array<number>`. Calls to this method will be correctly typed.
+
+::impl
+function(kind) {
+  if (kind instanceof Function)
+    return this.filter(x => x instanceof kind);
+
+  if (!['string', 'number', 'bigint', 'boolean', 'symbol'].includes(kind)) {
+    throw Error(`Invalid primitive type '${kind}'`);
+  }
+
+  return this.filter(x => typeof x === kind);
+}
+
+::test
+
+const ok = Symbol('ok');
+
+const mixed = [
+  new String('abc'),
+  new Number(123),
+  'string',
+  12,
+  BigInt(12),
+  true,
+  ok,
+];
+
+function StringsOnly(s: String) { }
+function NumbersOnly(n: Number) { }
+function stringsOnly(s: string) { }
+function numbersOnly(n: number) { }
+function bigintsOnly(b: bigint) { }
+function symbolsOnly(s: symbol) { }
+function booleansOnly(b: boolean) { }
+
+const Strings = mixed[W.filterIsA](String);
+const Numbers = mixed[W.filterIsA](Number);
+const strings = mixed[W.filterIsA]('string');
+const numbers = mixed[W.filterIsA]('number');
+const bigints = mixed[W.filterIsA]('bigint');
+const symbols = mixed[W.filterIsA]('symbol');
+const booleans = mixed[W.filterIsA]('boolean');
+
+// Ensure typings worked correctly
+StringsOnly(Strings);
+NumbersOnly(Numbers);
+stringsOnly(strings);
+numbersOnly(numbers);
+bigintsOnly(bigints);
+symbolsOnly(symbols);
+booleansOnly(booleans);
+
+// Ensure runtime worked correctly
+expect(mixed[W.filterIsA](String)).toStrictEqual([new String('abc')]);
+expect(mixed[W.filterIsA](Number)).toStrictEqual([new Number(123)]);
+expect(mixed[W.filterIsA]('string')).toStrictEqual(['string']);
+expect(mixed[W.filterIsA]('number')).toStrictEqual([12]);
+expect(mixed[W.filterIsA]('bigint')).toStrictEqual([BigInt(12)]);
+expect(mixed[W.filterIsA]('boolean')).toStrictEqual([true]);
+expect(mixed[W.filterIsA]('symbol')).toStrictEqual([ok]);

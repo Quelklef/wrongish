@@ -38,6 +38,17 @@ Onto the methods!
 
 ***
 
+### `Array#[filterIsA, filterIs, filterOf, filterInstanceOf, filterTypeof]`
+
+- type: `Array<T>[filterIsA]: (kind: Function | 'string' | 'number' | 'bigint' | 'boolean' | 'symbol') => Array<typeof kind extends Function ? typeof kind : typeof kind extends 'string' ? string : typeof kind extends 'number' ? number : typeof kind extends 'bigint' ? bigint : typeof kind extends 'boolean' ? boolean : typeof kind extends 'symbol' ? symbol : never>`
+
+This method has two different funcionalities:
+
+1. If given a constructor function, filter to instances of the constructor
+2. If given a string, filter to elements whos `typeof` returns the string
+
+Useful because Typescript doesn't realize that `xs.filter(x => x instanceof Y)` is an `Array<Y>` or that `[1, 's'].filter(x => typeof x === 'number')` is an `Array<number>`. Calls to this method will be correctly typed.
+
 ### `Array#[mapfilter]`
 
 - type: `Array<T>[mapfilter]: <S>(func: (x: T) => false | S) => Array<S>`
