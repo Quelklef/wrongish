@@ -101,6 +101,20 @@ Return the only item in the array, if there is exactly one; else, throw an error
 
 Collapses calls within `delay` milliseconds of each other into a single call.
 
+### `Function#[invoke, call]`
+
+- type: `Function[invoke]: <F extends (...args: any[]) => any>(this: F) => ReturnType<F>`
+
+Call a function and return the result
+
+I personally like to use this to run some async code within a sync block, like:
+```js
+M.invoke(async () => {
+  const thing = await getThing();
+  await do(stuff).with(thing);
+}):
+```
+
 ### `Function#[throttle]`
 
 - type: `Function[throttle]: <F extends (...args: any[]) => void>(this: F, delay: number) => F`

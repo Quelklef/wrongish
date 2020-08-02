@@ -1,0 +1,23 @@
+::host Function
+::type <F extends (...args: any[]) => any>(this: F) => ReturnType<F>
+::syms invoke call
+
+::docn
+Call a function and return the result
+
+I personally like to use this to run some async code within a sync block, like:
+```js
+M.invoke(async () => {
+  const thing = await getThing();
+  await do(stuff).with(thing);
+}):
+```
+::impl
+function() {
+  return this();
+}
+
+::test
+const get = () => 'value';
+const got: string = M.invoke(get);
+expect(got).toBe('value');
