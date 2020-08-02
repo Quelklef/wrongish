@@ -1,0 +1,30 @@
+::host Set<T>
+::type (item: any) => item is T
+::syms has2
+
+::docn
+Identical to `Set#has` in every way except for its type.
+
+While `Set<T>#has` only accepts values of the `T` type, `Set<T>#[has2]` accepts values of any type and, if the check passes, tells typescript that the checked vlaue is of type `T`.
+
+```ts
+const JsKeyword = 'let' | 'in' | 'function' | ...;
+const jsKeywords: Set<JsKeyword> = new Set(['let', 'in', 'function', ...]);
+
+// later
+
+const text = getTextFromSomewhere();
+const keywords: Set<JsKeyword> = text.split(' ').filter(word => jsKeywords[W.has2](word));
+```
+
+**Note**: The choice of the name `has2` is intentionally obtuse in order not to suggest different semantics from `Set#has`, which a more meaingful name like `hasAny`, `hasOther`, or `hasForeign` may have done. If you feel there is a better name for `has2`, please let me know.
+
+::impl
+Set.prototype.has
+
+::test
+const nums = new Set([1, 2, 3]);
+const x: string | number = 100;
+if (nums[W.has2](x))
+  numberOnly(x);
+function numberOnly(n: number) { }

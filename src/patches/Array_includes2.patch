@@ -1,0 +1,30 @@
+::host Array<T>
+::type (item: any) => item is T
+::syms includes2
+
+::docn
+Identical to `Array#includes` in every way except for its type.
+
+While `Array<T>#includes` only accepts values of the `T` type, `Array<T>#[includes2]` accepts values of any type and, if the check passes, tells typescript that the checked vlaue is of type `T`.
+
+```ts
+const JsKeyword = 'let' | 'in' | 'function' | ...;
+const jsKeywords: Array<JsKeyword> = ['let', 'in', 'function', ...];
+
+// later
+
+const text = getTextFromSomewhere();
+const keywords: Array<JsKeyword> = text.split(' ').filter(word => jsKeywords[W.includes2](word));
+```
+
+**Note**: The choice of the name `includes2` is intentionally obtuse in order not to suggest different semantics from `Array#includes`, which a more meaingful name like `includesAny`, `includesOther`, or `includesForeign` may have done. If you feel there is a better name for `includes2`, please let me know.
+
+::impl
+Array.prototype.includes
+
+::test
+const nums = [1, 2, 3];
+const x: string | number = 100;
+if (nums[W.includes2](x))
+  numberOnly(x);
+function numberOnly(n: number) { }

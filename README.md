@@ -49,6 +49,26 @@ This method has two different funcionalities:
 
 Useful because Typescript doesn't realize that `xs.filter(x => x instanceof Y)` is an `Array<Y>` or that `[1, 's'].filter(x => typeof x === 'number')` is an `Array<number>`. Calls to this method will be correctly typed.
 
+### `Array#[includes2]`
+
+- type: `Array<T>[includes2]: (item: any) => item is T`
+
+Identical to `Array#includes` in every way except for its type.
+
+While `Array<T>#includes` only accepts values of the `T` type, `Array<T>#[includes2]` accepts values of any type and, if the check passes, tells typescript that the checked vlaue is of type `T`.
+
+```ts
+const JsKeyword = 'let' | 'in' | 'function' | ...;
+const jsKeywords: Array<JsKeyword> = ['let', 'in', 'function', ...];
+
+// later
+
+const text = getTextFromSomewhere();
+const keywords: Array<JsKeyword> = text.split(' ').filter(word => jsKeywords[W.includes2](word));
+```
+
+**Note**: The choice of the name `includes2` is intentionally obtuse in order not to suggest different semantics from `Array#includes`, which a more meaingful name like `includesAny`, `includesOther`, or `includesForeign` may have done. If you feel there is a better name for `includes2`, please let me know.
+
 ### `Array#[mapfilter]`
 
 - type: `Array<T>[mapfilter]: <S>(func: (x: T) => false | S) => Array<S>`
@@ -219,6 +239,26 @@ Like `Array#every`, but for `Set`.
 - type: `Set<T>[filter]: (pred: (item: T) => boolean) => Set<T>`
 
 Like `Array#filter`, but for `Set`.
+
+### `Set#[has2]`
+
+- type: `Set<T>[has2]: (item: any) => item is T`
+
+Identical to `Set#has` in every way except for its type.
+
+While `Set<T>#has` only accepts values of the `T` type, `Set<T>#[has2]` accepts values of any type and, if the check passes, tells typescript that the checked vlaue is of type `T`.
+
+```ts
+const JsKeyword = 'let' | 'in' | 'function' | ...;
+const jsKeywords: Set<JsKeyword> = new Set(['let', 'in', 'function', ...]);
+
+// later
+
+const text = getTextFromSomewhere();
+const keywords: Set<JsKeyword> = text.split(' ').filter(word => jsKeywords[W.has2](word));
+```
+
+**Note**: The choice of the name `has2` is intentionally obtuse in order not to suggest different semantics from `Set#has`, which a more meaingful name like `hasAny`, `hasOther`, or `hasForeign` may have done. If you feel there is a better name for `has2`, please let me know.
 
 ### `Set#[intersect, and]`
 
