@@ -10,7 +10,7 @@ If the supplied value is `null` or `undefined`, throw an error. Else, return the
 ::impl
 function(err) {
   if (this === null || this === undefined)
-    throw Error(err || `some(W.{this})`);
+    throw Error(err || `Got ${this} in Object#[a]`);
   return this;
 }
 
