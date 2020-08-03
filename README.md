@@ -155,6 +155,12 @@ Return a value from a map, if it exists, or an alternative value
 
 Get a value from a map, or create a new one if it doesn't exist.
 
+### `Map#[setIfAbsent, default, initial, init]`
+
+- type: `Map<K, V>[setIfAbsent]: (key: K, value: V) => this`
+
+If the given key isn't in the map already, set it to the given value
+
 ***
 
 ### `Number#[clamp]`
@@ -339,3 +345,9 @@ Return a value from a weak map, if it exists, or an alternative value
 - type: `WeakMap<K, V>[getOrSet]: (key: K, defaultValue: V) => V`
 
 Get a value from a weak map, or create a new one if it doesn't exist.
+
+### `WeakMap#[setIfAbsent, default, initial, init]`
+
+- type: `WeakMap<K, V>[setIfAbsent]: (key: K, value: V) => this`
+
+If the given key isn't in the map already, set it to the given value

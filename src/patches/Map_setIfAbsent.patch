@@ -1,0 +1,21 @@
+::host Map<K, V>
+::type (key: K, value: V) => this
+::syms setIfAbsent default initial init
+
+::docn
+If the given key isn't in the map already, set it to the given value
+
+::impl
+function(key, val) {
+  if (!this.has(key))
+    this.set(key, val);
+  return this;
+}
+
+::test
+const m = new Map();
+expect(m.get('x')).toBe(undefined);
+m[W.setIfAbsent]('x', 1);
+expect(m.get('x')).toBe(1);
+m[W.setIfAbsent]('x', 2);
+expect(m.get('x')).toBe(1);
