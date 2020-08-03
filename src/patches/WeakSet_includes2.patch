@@ -1,0 +1,18 @@
+::host WeakSet<T>
+::type (item: any) => item is T
+::syms has2
+
+::docn
+Like `Set#[has2]`, but for `WeakSet`.
+
+::impl
+WeakSet.prototype.has
+
+::test
+const arr = [];
+const obj = {};
+const nums = new WeakSet<Array<number> | object>([arr, obj]);
+const x: Array<number> | object = obj;
+if (nums[W.has2](x))
+  objOnly(x);
+function objOnly(o: object) { }

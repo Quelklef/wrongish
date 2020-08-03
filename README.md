@@ -351,3 +351,11 @@ Get a value from a weak map, or create a new one if it doesn't exist.
 - type: `WeakMap<K, V>[setIfAbsent]: (key: K, alt: () => V) => this`
 
 If the given key isn't in the map already, set it to the given value
+
+***
+
+### `WeakSet#[has2]`
+
+- type: `WeakSet<T>[has2]: (item: any) => item is T`
+
+Like `Set#[has2]`, but for `WeakSet`.
