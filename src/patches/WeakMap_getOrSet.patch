@@ -1,22 +1,22 @@
 ::host WeakMap<K, V>
-::type (key: K, defaultValue: V) => V
+::type (key: K, alt: () => V) => V
 ::syms getOrSet
 
 ::docn
 Get a value from a weak map, or create a new one if it doesn't exist.
 
 ::impl
-function(key, deflt) {
-  if (this.has(key)) {
+function(key, alt) {
+  if (this.has(key))
     return this.get(key);
-  } else {
-    this.set(key, deflt);
-    return deflt;
-  }
+
+  const val = alt();
+  this.set(key, val);
+  return val;
 }
 
 ::test
 const m = new WeakMap();
 const key = [];
-expect(m[W.getOrSet](key, 'y')).toBe('y');
-expect(m[W.getOrSet](key, 'z')).toBe('y');
+expect(m[W.getOrSet](key, () => 'y')).toBe('y');
+expect(m[W.getOrSet](key, () => 'z')).toBe('y');

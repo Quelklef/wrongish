@@ -145,19 +145,19 @@ Restrict a function to only run once every `delay` milliseconds.
 
 ### `Map#[getOr]`
 
-- type: `Map<K, V>[getOr]: <Alt>(key: K, alt: Alt) => V | Alt`
+- type: `Map<K, V>[getOr]: <Alt>(key: K, alt: () => Alt) => V | Alt`
 
 Return a value from a map, if it exists, or an alternative value
 
 ### `Map#[getOrSet]`
 
-- type: `Map<K, V>[getOrSet]: (key: K, defaultValue: V) => V`
+- type: `Map<K, V>[getOrSet]: (key: K, alt: () => V) => V`
 
 Get a value from a map, or create a new one if it doesn't exist.
 
 ### `Map#[setIfAbsent, default, initial, init]`
 
-- type: `Map<K, V>[setIfAbsent]: (key: K, value: V) => this`
+- type: `Map<K, V>[setIfAbsent]: (key: K, alt: () => V) => this`
 
 If the given key isn't in the map already, set it to the given value
 
@@ -336,18 +336,18 @@ Remove an item from a set.
 
 ### `WeakMap#[getOr]`
 
-- type: `WeakMap<K, V>[getOr]: <Alt>(key: K, alt: Alt) => V | Alt`
+- type: `WeakMap<K, V>[getOr]: <Alt>(key: K, alt: () => Alt) => V | Alt`
 
 Return a value from a weak map, if it exists, or an alternative value
 
 ### `WeakMap#[getOrSet]`
 
-- type: `WeakMap<K, V>[getOrSet]: (key: K, defaultValue: V) => V`
+- type: `WeakMap<K, V>[getOrSet]: (key: K, alt: () => V) => V`
 
 Get a value from a weak map, or create a new one if it doesn't exist.
 
 ### `WeakMap#[setIfAbsent, default, initial, init]`
 
-- type: `WeakMap<K, V>[setIfAbsent]: (key: K, value: V) => this`
+- type: `WeakMap<K, V>[setIfAbsent]: (key: K, alt: () => V) => this`
 
 If the given key isn't in the map already, set it to the given value

@@ -1,14 +1,14 @@
 ::host WeakMap<K, V>
-::type (key: K, value: V) => this
+::type (key: K, alt: () => V) => this
 ::syms setIfAbsent default initial init
 
 ::docn
 If the given key isn't in the map already, set it to the given value
 
 ::impl
-function(key, val) {
+function(key, alt) {
   if (!this.has(key))
-    this.set(key, val);
+    this.set(key, alt());
   return this;
 }
 
@@ -16,7 +16,7 @@ function(key, val) {
 const m = new WeakMap();
 const key = [];
 expect(m.get(key)).toBe(undefined);
-m[W.setIfAbsent](key, 1);
+m[W.setIfAbsent](key, () => 1);
 expect(m.get(key)).toBe(1);
-m[W.setIfAbsent](key, 2);
+m[W.setIfAbsent](key, () => 2);
 expect(m.get(key)).toBe(1);
