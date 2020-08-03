@@ -38,7 +38,7 @@ Onto the methods!
 
 ***
 
-### `Array#[filterIsA, filterIs, filterOf, filterInstanceOf, filterTypeof]`
+### `Array#[filterIsA, filterIsAn, filterIs, filterOf, filterInstanceOf, filterTypeof]`
 
 - type: `Array<T>[filterIsA]: (kind: Function | 'string' | 'number' | 'bigint' | 'boolean' | 'symbol') => Array<typeof kind extends Function ? typeof kind : typeof kind extends 'string' ? string : typeof kind extends 'number' ? number : typeof kind extends 'bigint' ? bigint : typeof kind extends 'boolean' ? boolean : typeof kind extends 'symbol' ? symbol : never>`
 
