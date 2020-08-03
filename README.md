@@ -325,3 +325,17 @@ Add an item to a set.
 - type: `Set<T>[without]: (item: T) => Set<T>`
 
 Remove an item from a set.
+
+***
+
+### `WeakMap#[getOr]`
+
+- type: `WeakMap<K, V>[getOr]: <Alt>(key: K, alt: Alt) => V | Alt`
+
+Return a value from a weak map, if it exists, or an alternative value
+
+### `WeakMap#[getOrSet]`
+
+- type: `WeakMap<K, V>[getOrSet]: (key: K, defaultValue: V) => V`
+
+Get a value from a weak map, or create a new one if it doesn't exist.

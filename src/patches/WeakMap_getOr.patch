@@ -1,0 +1,21 @@
+::host WeakMap<K, V>
+::syms getOr
+::type <Alt>(key: K, alt: Alt) => V | Alt
+
+::docn
+Return a value from a weak map, if it exists, or an alternative value
+
+::impl
+function(key, alt) {
+  if (!this.has(key))
+    return alt;
+  return this.get(key);
+}
+
+::test
+const m = new WeakMap();
+const key1 = [];
+const key2 = [];
+m.set(key1, 2);
+expect(m[W.getOr](key1, -1)).toBe(2);
+expect(m[W.getOr](key2, -1)).toBe(-1);
