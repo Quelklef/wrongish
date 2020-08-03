@@ -1,6 +1,6 @@
 ::host Map<K, V>
 ::type (key: K, defaultValue: V) => V
-::syms getOrCreate
+::syms getOrSet
 
 ::docn
 Get a value from a map, or create a new one if it doesn't exist.
@@ -17,5 +17,5 @@ function(key, deflt) {
 
 ::test
 const m = new Map();
-expect(m[W.getOrCreate]('x', 'y')).toBe('y');
-expect(m[W.getOrCreate]('x', 'z')).toBe('y');
+expect(m[W.getOrSet]('x', 'y')).toBe('y');
+expect(m[W.getOrSet]('x', 'z')).toBe('y');

@@ -149,9 +149,9 @@ Restrict a function to only run once every `delay` milliseconds.
 
 Return a value from a map, if it exists, or an alternative value
 
-### `Map#[getOrCreate]`
+### `Map#[getOrSet]`
 
-- type: `Map<K, V>[getOrCreate]: (key: K, defaultValue: V) => V`
+- type: `Map<K, V>[getOrSet]: (key: K, defaultValue: V) => V`
 
 Get a value from a map, or create a new one if it doesn't exist.
 
