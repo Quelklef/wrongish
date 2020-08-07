@@ -8,6 +8,45 @@ my @ts_keywords = <
   implements interface let package private protected public static yield
 >;
 
+sub getTypeParams($type, $must_be_at_start) {
+
+  if $must_be_at_start and not $type.starts-with('<') {
+    return ('', '');
+  }
+  
+  my @params = [''];
+  my $depth = 0;
+  
+  my @chars = $type.split('')[1..*-1];
+  for @chars.kv -> $idx, $char {
+    my $ignore_angles = ($idx > 0 and @chars[$idx - 1] eq '='); # ignore the '>' in fat arrows
+
+    if $char eq '>' and not $ignore_angles {
+      $depth--;
+      last if $depth == 0;  # stop after one <block>
+    }
+    
+    if $depth == 1 and $char eq ',' {
+      @params[*-1] .= trim;
+      @params.push('');
+    } elsif $depth > 0 {
+      @params[*-1] ~= $char
+    }
+    
+    $depth++ if $char eq '<' and not $ignore_angles;
+  }
+
+  @params = @params.map({ .trim }).grep({ $_ ne '' });
+
+  return ('', '') if @params.elems == 0;
+
+  my $with_constraints = "<" ~ @params.join(", ") ~ ">";
+  my $without_constraints =
+    "<" ~ @params.map({ .substr(0, $_.index(' ') || *) } ).join(", ")  ~ ">";
+
+  return ($with_constraints, $without_constraints);
+}
+
 sub compile {
 
   my @type_chunks = [];
@@ -23,40 +62,22 @@ sub compile {
   my @all_syms = @patches.flatmap({ .<syms>.Array }).unique;
 
   for @patches -> %patch {
-    # vvv add <tvar>, type variable of patch type
-    %patch<tvar> = getTypeVar(%patch<type>);
-    # vvv add <hvar>, type variable on host
-    %patch<hvar> = getTypeVar(%patch<host>.flip).flip;
-    %patch<hvar_naked> = removeTypeConstraints(%patch<hvar>);
-    # vvv add <bvar>, combined type variables of host and patch
-    %patch<bvar> = (%patch<tvar> and %patch<hvar>) ?? (%patch<hvar>.substr(0, *-1) ~ ', ' ~ %patch<tvar>.substr(1, *)) !! (%patch<hvar> ~ %patch<tvar>);
-    # vvv strip type variables from <host> and <Type>
-    %patch<type> = %patch<type>.substr(%patch<tvar>.chars);
-    %patch<host> = %patch<host>.flip.substr(%patch<hvar>.chars).flip;
-  }
+    
+    # constrainted/unconstrained type parameters of method
+    (%patch<m_tparam_c>, %patch<m_tparam_uc>) = getTypeParams(%patch<type>, True);
+    
+    # constrainted/unconstrained type parameters of host
+    (%patch<h_tparam_c>, %patch<h_tparam_uc>) = getTypeParams(%patch<host>, False);
+    
+    # combined contrainted type paramters of both host and method type
+    %patch<c_tparam_c> = (%patch<m_tparam_c> and %patch<h_tparam_c>)
+      ?? (%patch<h_tparam_c>.substr(0, *-1) ~ ', ' ~ %patch<m_tparam_c>.substr(1, *))
+      !! (%patch<h_tparam_c> ~ %patch<m_tparam_c>);
+    
+    # strip type variables from <host> and <type>
+    %patch<type> = %patch<type>.substr(%patch<m_tparam_c>.chars);
+    %patch<host> = %patch<host>.flip.substr(%patch<h_tparam_c>.chars).flip;
 
-  sub getTypeVar($type) {
-    # parse and return the type variable from the front of a type (e.g. the <T> in <T>(x: T) => T)
-    # this function is agnostic about which of '<>' is open and which is close
-    return '' if !($type.starts-with('<') or $type.starts-with('>'));
-    my $depth = 0;
-    my @chars = $type.split('')[1..*-1];
-    for @chars.kv -> $idx, $char {
-      next if $idx > 0 and @chars[$idx - 1] eq '=';  # ignore the '>' in fat arrows
-      $depth++ if $char eq '<';
-      $depth-- if $char eq '>';
-      return $type.substr(0, $idx + 1) if $depth == 0;
-    }
-  }
-
-  sub removeTypeConstraints($type_vars) {
-    return $type_vars if $type_vars eq '';
-    my $body = $type_vars
-      .substr(1, *-1)  # remove '<' and '>'
-      .split(", ")  # split into vars
-      .map({ .substr(0, $_.index(' ') || *) })  # remove contraints from each
-      .join(", ");
-    return "<" ~ $body ~ ">";
   }
 
   # typescript symbol declarations
@@ -73,7 +94,7 @@ sub compile {
   @type_chunks.push('declare global {');
   for @patches -> %patch {
     for %patch<syms>.Array -> $sym {
-      @type_chunks.push("  export interface %patch<host>%patch<hvar> \{ [\$$sym]: %patch<tvar>%patch<type>; \}");
+      @type_chunks.push("  export interface %patch<host>%patch<h_tparam_c> \{ [\$$sym]: %patch<m_tparam_c>%patch<type>; \}");
     }
   }
   @type_chunks.push("}\n");
@@ -82,7 +103,7 @@ sub compile {
   for @patches -> %patch {
     for %patch<syms>.Array -> $sym {
       @type_chunks.push("interface __Unbound \{ \$$sym: __Unbound['$sym']; }");
-      @type_chunks.push("interface __Unbound \{ $sym%patch<bvar>\(\n  thisArg: __Default\<%patch<host>%patch<hvar_naked>, ThisParameterType\<%patch<type>>>,\n  ...args: Parameters\<%patch<type>>\n  ): ReturnType\<%patch<type>>; }");
+      @type_chunks.push("interface __Unbound \{ $sym%patch<c_tparam_c>\(\n  thisArg: __Default\<%patch<host>%patch<h_tparam_uc>, ThisParameterType\<%patch<type>>>,\n  ...args: Parameters\<%patch<type>>\n  ): ReturnType\<%patch<type>>; }");
       @type_chunks.push("");
     }
   }
@@ -104,7 +125,7 @@ sub compile {
     # compile documentation
     @docn_chunks.push('***') if $host_change;
     @docn_chunks.push("### `%patch<host>#[" ~ %patch<syms>.join(', ') ~"]`");
-    @docn_chunks.push("- type: `%patch<host>%patch<hvar>\[$name]: %patch<tvar>%patch<type>`");
+    @docn_chunks.push("- type: `%patch<host>%patch<h_tparam_c>\[$name]: %patch<m_tparam_c>%patch<type>`");
     @docn_chunks.push(%patch<docn>);
 
     # compile implementation
