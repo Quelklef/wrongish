@@ -101,15 +101,21 @@ sub compile {
     @impl_chunks.push("");
 
     # compile test
-    my $header = %patch<test>.contains('it(') ?? 'describe' !! 'it';
-    my $async = <await async Promise>.grep({ %patch<test>.contains($_) }) ?? 'async' !! '';
-    @test_chunks.push("$header\('supports %patch<host>#\[$name]', $async () => \{\n%patch<test>.indent(2)\n\});\n".indent(2));
-    note "Warning: patch %patch<file> has no tests" if %patch<test>.trim eq '';
+    if %patch<test>.trim eq '' {
+      note "Warning: patch %patch<file> has no tests";
+    } else {
+      my $header = %patch<test>.contains('it(') ?? 'describe' !! 'it';
+      my $async = <await async Promise>.grep({ %patch<test>.contains($_) }) ?? ' async' !! '';
+      my $marked = %patch<test>.split("\n").map({ "/* %patch<host>#\[$name] */ $_" }).join("\n").indent(2);
+      @test_chunks.push("$header\('supports %patch<host>#\[$name]',$async () => \{\n$marked\n\});\n".indent(2));
+    }
   }
 
   # write to file
+  
   my $out_dir = "../compiled";
   mkdir($out_dir);
+
   fill_stub('./README.stub.md'       , '..', @docn_chunks.join("\n\n"));
   fill_stub('./wrongish.stub.js'     , $out_dir, @impl_chunks.join("\n"));
   fill_stub('./wrongish.stub.test.ts', $out_dir, @test_chunks.join("\n"));
