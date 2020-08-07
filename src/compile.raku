@@ -125,14 +125,14 @@ sub compile {
   
 }
 
-sub fill_stub($stub_file, $out_dir, $patch) {
+sub fill_stub($stub_file, $out_dir, *@patches) {
   my @lines = $stub_file.IO.slurp.split("\n");
   
-  my @entries = @lines.grep({ .contains('%ENTRY') }, :k);
-  if @entries.elems != 1 { die "Stub $stub_file has non-one number of entrypoints." }
-  my $entry = @entries[0];
-  
-  my $patched = @lines.kv.map(-> $i, $line { $i == $entry ?? $patch !! $line }).join("\n");
+  my @entrypoints = @lines.grep({ .contains('%ENTRY') }, :k);
+  if @entrypoints.elems != @patches.elems {
+    die "Stub $stub_file has " ~ @entrypoints.elems ~ " entrypoint(s) but " ~ @patches.elems ~ " patches were provided." }
+
+  my $patched = @lines.kv.map(-> $i, $line { $i eq any(@entrypoints) ?? @patches[@entrypoints.first($i, :k)] !! $line }).join("\n");
 
   my $out_file = IO::Path.new($out_dir).add($stub_file.subst(/\.stub/, '')).cleanup;
   my $fh = $out_file.open(:w);
