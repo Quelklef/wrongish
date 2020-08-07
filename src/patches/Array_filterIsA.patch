@@ -1,5 +1,5 @@
 ::host Array<T>
-::type (kind: Function | 'string' | 'number' | 'bigint' | 'boolean' | 'symbol') => Array<typeof kind extends Function ? typeof kind : typeof kind extends 'string' ? string : typeof kind extends 'number' ? number : typeof kind extends 'bigint' ? bigint : typeof kind extends 'boolean' ? boolean : typeof kind extends 'symbol' ? symbol : never>
+::type <K>(kind: K) => K extends Function ? K[] : K extends 'string' ? string[] : K extends 'number' ? number[] : K extends 'bigint' ? bigint[] : K extends 'boolean' ? boolean[] : K extends 'symbol' ? symbol[] : never
 ::syms filterIsA filterIsAn filterIs filterOf filterInstanceOf filterTypeof
 
 ::docn

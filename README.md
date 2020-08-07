@@ -40,7 +40,7 @@ Onto the methods!
 
 ### `Array#[filterIsA, filterIsAn, filterIs, filterOf, filterInstanceOf, filterTypeof]`
 
-- type: `Array<T>[filterIsA]: (kind: Function | 'string' | 'number' | 'bigint' | 'boolean' | 'symbol') => Array<typeof kind extends Function ? typeof kind : typeof kind extends 'string' ? string : typeof kind extends 'number' ? number : typeof kind extends 'bigint' ? bigint : typeof kind extends 'boolean' ? boolean : typeof kind extends 'symbol' ? symbol : never>`
+- type: `Array<T>[filterIsA]: <K>(kind: K) => K extends Function ? K[] : K extends 'string' ? string[] : K extends 'number' ? number[] : K extends 'bigint' ? bigint[] : K extends 'boolean' ? boolean[] : K extends 'symbol' ? symbol[] : never`
 
 This method has two different funcionalities:
 
