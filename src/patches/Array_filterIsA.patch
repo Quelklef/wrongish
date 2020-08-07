@@ -1,5 +1,5 @@
 ::host Array<T>
-::type <K>(kind: K) => K extends Function ? K[] : K extends 'string' ? string[] : K extends 'number' ? number[] : K extends 'bigint' ? bigint[] : K extends 'boolean' ? boolean[] : K extends 'symbol' ? symbol[] : never
+::type <K>(kind: K) => K extends { new(...args: any): any } ? InstanceType<K>[] : K extends 'string' ? string[] : K extends 'number' ? number[] : K extends 'bigint' ? bigint[] : K extends 'boolean' ? boolean[] : K extends 'symbol' ? symbol[] : never
 ::syms filterIsA filterIsAn filterIs filterOf filterInstanceOf filterTypeof
 
 ::docn
@@ -36,30 +36,13 @@ const mixed = [
   ok,
 ];
 
-function StringsOnly(s: String) { }
-function NumbersOnly(n: Number) { }
-function stringsOnly(s: string) { }
-function numbersOnly(n: number) { }
-function bigintsOnly(b: bigint) { }
-function symbolsOnly(s: symbol) { }
-function booleansOnly(b: boolean) { }
-
-const Strings = mixed[W.filterIsA](String);
-const Numbers = mixed[W.filterIsA](Number);
-const strings = mixed[W.filterIsA]('string');
-const numbers = mixed[W.filterIsA]('number');
-const bigints = mixed[W.filterIsA]('bigint');
-const symbols = mixed[W.filterIsA]('symbol');
-const booleans = mixed[W.filterIsA]('boolean');
-
-// Ensure typings worked correctly
-StringsOnly(Strings);
-NumbersOnly(Numbers);
-stringsOnly(strings);
-numbersOnly(numbers);
-bigintsOnly(bigints);
-symbolsOnly(symbols);
-booleansOnly(booleans);
+const Strings: Array<String> = mixed[W.filterIsA](String);
+const Numbers: Array<Number> = mixed[W.filterIsA](Number);
+const strings: Array<string> = mixed[W.filterIsA]('string');
+const numbers: Array<number> = mixed[W.filterIsA]('number');
+const bigints: Array<bigint> = mixed[W.filterIsA]('bigint');
+const symbols: Array<symbol> = mixed[W.filterIsA]('symbol');
+const booleans: Array<boolean> = mixed[W.filterIsA]('boolean');
 
 // Ensure runtime worked correctly
 expect(mixed[W.filterIsA](String)).toStrictEqual([new String('abc')]);

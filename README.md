@@ -40,7 +40,7 @@ Onto the methods!
 
 ### `Array#[filterIsA, filterIsAn, filterIs, filterOf, filterInstanceOf, filterTypeof]`
 
-- type: `Array<T>[filterIsA]: <K>(kind: K) => K extends Function ? K[] : K extends 'string' ? string[] : K extends 'number' ? number[] : K extends 'bigint' ? bigint[] : K extends 'boolean' ? boolean[] : K extends 'symbol' ? symbol[] : never`
+- type: `Array<T>[filterIsA]: <K>(kind: K) => K extends { new(...args: any): any } ? InstanceType<K>[] : K extends 'string' ? string[] : K extends 'number' ? number[] : K extends 'bigint' ? bigint[] : K extends 'boolean' ? boolean[] : K extends 'symbol' ? symbol[] : never`
 
 This method has two different funcionalities:
 
@@ -196,7 +196,7 @@ If the supplied value is `null` or `undefined`, throw an error. Else, return the
 
 ### `Object#[chain]`
 
-- type: `Object[chain]: <T, R>(this: T, func: (me: T) => R) => T extends null ? null : T extends undefined ? undefined : R`
+- type: `Object[chain]: <Arg, Param, Ret>(this: Arg, func: (me: Param) => Ret) => Arg extends null ? null : Arg extends undefined ? undefined : Ret`
 
 Like `Object#[pipe]`, unless the input is `null` or `undefined`, in which case it returns the input.
 
@@ -336,19 +336,19 @@ Remove an item from a set.
 
 ### `WeakMap#[getOr]`
 
-- type: `WeakMap<K, V>[getOr]: <Alt>(key: K, alt: () => Alt) => V | Alt`
+- type: `WeakMap<K extends object, V>[getOr]: <Alt>(key: K, alt: () => Alt) => V | Alt`
 
 Return a value from a weak map, if it exists, or an alternative value
 
 ### `WeakMap#[getOrSet]`
 
-- type: `WeakMap<K, V>[getOrSet]: (key: K, alt: () => V) => V`
+- type: `WeakMap<K extends object, V>[getOrSet]: (key: K, alt: () => V) => V`
 
 Get a value from a weak map, or create a new one if it doesn't exist.
 
 ### `WeakMap#[setIfAbsent, default, initial, init]`
 
-- type: `WeakMap<K, V>[setIfAbsent]: (key: K, alt: () => V) => this`
+- type: `WeakMap<K extends object, V>[setIfAbsent]: (key: K, alt: () => V) => this`
 
 If the given key isn't in the map already, set it to the given value
 
@@ -356,6 +356,6 @@ If the given key isn't in the map already, set it to the given value
 
 ### `WeakSet#[has2]`
 
-- type: `WeakSet<T>[has2]: (item: any) => item is T`
+- type: `WeakSet<T extends object>[has2]: (item: any) => item is T`
 
 Like `Set#[has2]`, but for `WeakSet`.

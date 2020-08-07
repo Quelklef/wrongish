@@ -5,6 +5,7 @@
     "lib": ["es6"],
     "types": ["mocha"],
     "moduleResolution": "node",
+    "strict": true,
   },
   "include": [
     "./compiled",

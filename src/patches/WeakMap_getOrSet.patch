@@ -1,4 +1,4 @@
-::host WeakMap<K, V>
+::host WeakMap<K extends object, V>
 ::type (key: K, alt: () => V) => V
 ::syms getOrSet
 
@@ -16,7 +16,7 @@ function(key, alt) {
 }
 
 ::test
-const m = new WeakMap();
-const key = [];
+const m = new WeakMap<object, string>();
+const key: Array<number> = [];
 expect(m[W.getOrSet](key, () => 'y')).toBe('y');
 expect(m[W.getOrSet](key, () => 'z')).toBe('y');

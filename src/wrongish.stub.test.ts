@@ -1,4 +1,5 @@
 
+import './wrongish';
 import * as W from './wrongish';
 const M = W.unbound;
 
@@ -39,8 +40,8 @@ describe('wrongish', () => {
 
   it('has no shadowed operations', () => {
     // Return supertypes of a type
-    function protos(constructor) {
-      let proto = constructor.prototype.__proto__;
+    function protos(constructor: any): Array<object> {
+      let proto = constructor.prototype?.__proto__;
       const protos = [];
       while (proto) {
         protos.push(proto);
@@ -52,16 +53,16 @@ describe('wrongish', () => {
     const errs = [];
     for (const { host, symbols } of (W as any).__patches) {
       for (const symbol of symbols) {
-        const shadowing = protos(host).filter(proto => proto.hasOwnProperty(symbol));
+        const shadowing = protos(host).filter((proto: object) => proto?.hasOwnProperty(symbol));
         const strSym = symbol.toString().slice(7, -1);
-        errs.push(...shadowing.map(proto =>
+        errs.push(...shadowing.map((proto: object) =>
           `${host.name}[${strSym}] shadows ${proto.constructor.name}[${strSym}]`));
       }
     }
     expect(errs).toStrictEqual([]);
   });
 
-  // %ENTRY
+  // %ENTRY //
   
 });
 

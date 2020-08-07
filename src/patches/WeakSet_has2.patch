@@ -1,4 +1,4 @@
-::host WeakSet<T>
+::host WeakSet<T extends object>
 ::type (item: any) => item is T
 ::syms has2
 
@@ -9,8 +9,8 @@ Like `Set#[has2]`, but for `WeakSet`.
 WeakSet.prototype.has
 
 ::test
-const arr = [];
-const obj = {};
+const arr: Array<number> = [];
+const obj: object = {};
 const nums = new WeakSet<Array<number> | object>([arr, obj]);
 const x: Array<number> | object = obj;
 if (nums[W.has2](x))

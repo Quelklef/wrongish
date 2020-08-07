@@ -27,6 +27,7 @@ sub compile {
     %patch<tvar> = getTypeVar(%patch<type>);
     # vvv add <hvar>, type variable on host
     %patch<hvar> = getTypeVar(%patch<host>.flip).flip;
+    %patch<hvar_naked> = removeTypeConstraints(%patch<hvar>);
     # vvv add <bvar>, combined type variables of host and patch
     %patch<bvar> = (%patch<tvar> and %patch<hvar>) ?? (%patch<hvar>.substr(0, *-1) ~ ', ' ~ %patch<tvar>.substr(1, *)) !! (%patch<hvar> ~ %patch<tvar>);
     # vvv strip type variables from <host> and <Type>
@@ -48,6 +49,16 @@ sub compile {
     }
   }
 
+  sub removeTypeConstraints($type_vars) {
+    return $type_vars if $type_vars eq '';
+    my $body = $type_vars
+      .substr(1, *-1)  # remove '<' and '>'
+      .split(", ")  # split into vars
+      .map({ .substr(0, $_.index(' ') || *) })  # remove contraints from each
+      .join(", ");
+    return "<" ~ $body ~ ">";
+  }
+
   # typescript symbol declarations
   for @all_syms -> $sym {
     if @ts_keywords.contains($sym) {
@@ -59,18 +70,19 @@ sub compile {
   @type_chunks.push("");
 
   # typscript bound declarations
+  @type_chunks.push('declare global {');
   for @patches -> %patch {
     for %patch<syms>.Array -> $sym {
-      @type_chunks.push("export interface %patch<host>%patch<hvar> \{ [\$$sym]: %patch<tvar>%patch<type>; \}");
+      @type_chunks.push("  export interface %patch<host>%patch<hvar> \{ [\$$sym]: %patch<tvar>%patch<type>; \}");
     }
   }
-  @type_chunks.push("");
+  @type_chunks.push("}\n");
   
   # typescript unbound declarations
   for @patches -> %patch {
     for %patch<syms>.Array -> $sym {
       @type_chunks.push("interface __Unbound \{ \$$sym: __Unbound['$sym']; }");
-      @type_chunks.push("interface __Unbound \{ $sym%patch<bvar>\(\n  thisArg: __Default\<%patch<host>%patch<hvar>, ThisParameterType\<%patch<type>>>,\n  ...args: Parameters\<%patch<type>>\n  ): ReturnType\<%patch<type>>; }");
+      @type_chunks.push("interface __Unbound \{ $sym%patch<bvar>\(\n  thisArg: __Default\<%patch<host>%patch<hvar_naked>, ThisParameterType\<%patch<type>>>,\n  ...args: Parameters\<%patch<type>>\n  ): ReturnType\<%patch<type>>; }");
       @type_chunks.push("");
     }
   }

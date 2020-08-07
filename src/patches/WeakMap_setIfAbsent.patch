@@ -1,4 +1,4 @@
-::host WeakMap<K, V>
+::host WeakMap<K extends object, V>
 ::type (key: K, alt: () => V) => this
 ::syms setIfAbsent default initial init
 
@@ -13,8 +13,8 @@ function(key, alt) {
 }
 
 ::test
-const m = new WeakMap();
-const key = [];
+const m = new WeakMap<Array<string>, number>();
+const key: Array<string> = [];
 expect(m.get(key)).toBe(undefined);
 m[W.setIfAbsent](key, () => 1);
 expect(m.get(key)).toBe(1);

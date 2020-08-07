@@ -1,4 +1,4 @@
-::host WeakMap<K, V>
+::host WeakMap<K extends object, V>
 ::syms getOr
 ::type <Alt>(key: K, alt: () => Alt) => V | Alt
 
@@ -13,9 +13,9 @@ function(key, alt) {
 }
 
 ::test
-const m = new WeakMap();
-const key1 = [];
-const key2 = [];
+const m = new WeakMap<object, number>();
+const key1: Array<number> = [];
+const key2: Array<number> = [];
 m.set(key1, 2);
 expect(m[W.getOr](key1, () => -1)).toBe(2);
 expect(m[W.getOr](key2, () => -1)).toBe(-1);

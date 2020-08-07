@@ -1,5 +1,5 @@
 ::host Object
-::type <T, R>(this: T, func: (me: T) => R) => T extends null ? null : T extends undefined ? undefined : R
+::type <Arg, Param, Ret>(this: Arg, func: (me: Param) => Ret) => Arg extends null ? null : Arg extends undefined ? undefined : Ret
 ::syms chain
 
 ::docn
