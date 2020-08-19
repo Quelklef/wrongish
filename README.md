@@ -278,6 +278,12 @@ Set intersection.
 
 Like `Array#map`, but for `Set`
 
+### `Set#[mapfilter]`
+
+- type: `Set<T>[mapfilter]: <S>(func: (x: T) => false | S) => Array<S>`
+
+Like `Array#[mapfilter]`, but for `Set`
+
 ### `Set#[minus]`
 
 - type: `Set<T>[minus]: (other: Set<T>) => Set<T>`

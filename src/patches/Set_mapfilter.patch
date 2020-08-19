@@ -1,0 +1,22 @@
+::host Set<T>
+::type <S>(func: (x: T) => false | S) => Array<S>
+::syms mapfilter
+
+::docn
+Like `Array#[mapfilter]`, but for `Set`
+
+::impl
+function(mapper) {
+  const result = new Set();
+  for (const item of this) {
+    const mapped = mapper(item);
+    if (mapped !== false)
+      result.add(mapped);
+  }
+  return result;
+}
+
+::test
+const items = new Set([1, 2, 3, 4, 5]);
+const result = items[W.mapfilter](x => x % 2 === 0 && Math.pow(x, 2));
+expect(result).toEqual(new Set([4, 16]));
