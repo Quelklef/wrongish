@@ -1,23 +1,57 @@
 ::host Number
-::type (this: number | Number, lo: number, hi: number) => number
+::type <Args extends [[number, number]] | [number, number]>(this: number | Number, ...args: Args) => number
 ::syms clamp
 
 ::docn
-Return the nearest number in the range `[lo, hi]`.
+Return the nearest number within the specified range.
+```ts
+M.clamp(-20, [0, 100])  // 0
+M.clamp(33, [0, 100])  // 33
+M.clamp(115, [0, 100])  // 100
+```
+
+Works with `Ininity` and `-Infinity`:
+```ts
+M.clamp(-20, [0, Infinity])  // 0
+M.clamp(1e6, [0, Infinity])  // 1e6
+M.clamp(1e10, [0, Infinity])  // 1e10
+// etc; similar with M.clamp(x, [-Infinity, hi])
+```
+
+You can either supply the range as a two-item array or as two arguments:
+```ts
+M.clamp(number, [lo, hi])
+M.clamp(number, lo, hi)
+number[W.clamp]([lo, hi])
+number[W.clamp](lo, hi)
+```
 
 ::impl
-function(lo, hi) {
-  return Math.max(lo, Math.min(hi, +this));
+function(...args) {
+  let lo, hi;
+
+  if (args.length === 1)
+    [lo, hi] = args[0];
+  else
+    [lo, hi] = args;
+
+  return Math.max(lo, Math.min(+this, hi));
 }
 
 ::test
 
-expect(M.clamp(9, 1, 5)).toBe(5);
-expect(new Number(9)[W.clamp](1, 5)).toBe(5);
+expect(M.clamp(-20, [0, 100])).toBe(0);
+expect(M.clamp(12, [0, 100])).toBe(12);
+expect(M.clamp(115, [0, 100])).toBe(100);
 
-expect(M.clamp(3, 1, 5)).toBe(3);
-expect(new Number(3)[W.clamp](1, 5)).toBe(3);
+expect(M.clamp(-20, 0, 100)).toBe(0);
+expect(M.clamp(12, 0, 100)).toBe(12);
+expect(M.clamp(115, 0, 100)).toBe(100);
 
-expect(M.clamp(0, 1, 5)).toBe(1);
-expect(new Number(0)[W.clamp](1, 5)).toBe(1);
+expect(new Number(-20)[W.clamp]([0, 100])).toBe(0);
+expect(new Number(12)[W.clamp]([0, 100])).toBe(12);
+expect(new Number(115)[W.clamp]([0, 100])).toBe(100);
 
+expect(new Number(-20)[W.clamp](0, 100)).toBe(0);
+expect(new Number(12)[W.clamp](0, 100)).toBe(12);
+expect(new Number(115)[W.clamp](0, 100)).toBe(100);

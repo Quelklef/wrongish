@@ -165,9 +165,30 @@ If the given key isn't in the map already, set it to the given value
 
 ### `Number#[clamp]`
 
-- type: `Number[clamp]: (this: number | Number, lo: number, hi: number) => number`
+- type: `Number[clamp]: <Args extends [[number, number]] | [number, number]>(this: number | Number, ...args: Args) => number`
 
-Return the nearest number in the range `[lo, hi]`.
+Return the nearest number within the specified range.
+```ts
+M.clamp(-20, [0, 100])  // 0
+M.clamp(33, [0, 100])  // 33
+M.clamp(115, [0, 100])  // 100
+```
+
+Works with `Ininity` and `-Infinity`:
+```ts
+M.clamp(-20, [0, Infinity])  // 0
+M.clamp(1e6, [0, Infinity])  // 1e6
+M.clamp(1e10, [0, Infinity])  // 1e10
+// etc; similar with M.clamp(x, [-Infinity, hi])
+```
+
+You can either supply the range as a two-item array or as two arguments:
+```ts
+M.clamp(number, [lo, hi])
+M.clamp(number, lo, hi)
+number[W.clamp]([lo, hi])
+number[W.clamp](lo, hi)
+```
 
 ### `Number#[mod, modulo]`
 
