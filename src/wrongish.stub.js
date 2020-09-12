@@ -2,8 +2,8 @@
 
 const __ex = module.exports;
 
-const __symbols = __ex.W = {};  // Wrongish symbols : name => Symbol
-const __unbound = __ex.M = {};  // Unbound syntax : name => Function
+const __nativeSymbols = __ex.W = {};  // Wrongish symbols : name => Symbol
+const __nativeUnbound = __ex.M = {};  // Unbound syntax : name => Function
 
 const __customSymbols = __ex.WU = {};  // User-defined symbols
 const __customUnbound = __ex.MU = {};  // User-defined unbound syntax
@@ -12,10 +12,10 @@ const __customUnbound = __ex.MU = {};  // User-defined unbound syntax
 // Used in a test
 const __patches = __ex.__patches = [];
 
-function __symbol(name, custom = false) {
+function __registerSymbol(name, native) {
 
-  const symbols = custom ? __customSymbols : __symbols;
-  const unbound = custom ? __customUnbound : __unbound;
+  const symbols = native ? __nativeSymbols : __customSymbols;
+  const unbound = native ? __nativeUnbound : __customUnbound;
 
   const symbol = symbols[name] = Symbol(name);
 
@@ -33,9 +33,9 @@ function __symbol(name, custom = false) {
 
 }
 
-function __patch(host, names, impl, custom = false) {
+function __applyPatch(host, names, impl, native) {
 
-  const symbols = custom ? __customSymbols : __symbols;
+  const symbols = native ? __nativeSymbols : __customSymbols;
 
   const patchSymbols = names.split(' ').map(name => symbols[name]);
   __patches.push({ host, symbols: patchSymbols, impl });
@@ -53,8 +53,8 @@ function __patch(host, names, impl, custom = false) {
 
 // User-defined operations
 function define(host, name, impl) {
-  const sym = __customSymbols[name] || __symbol(name, true);
-  __patch(host, name, impl, true);
+  const sym = __customSymbols[name] || __registerSymbol(name, false);
+  __applyPatch(host, name, impl, false);
 }
 __ex.define = define;  // For some reaosn, Mocha seems to freak the fuck out if this assignment isn't on its own line
 

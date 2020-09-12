@@ -107,7 +107,7 @@ sub compile {
 
   # javascript symbol definitions
   for @all_syms -> $sym {
-    @impl_chunks.push("__symbol('$sym');");
+    @impl_chunks.push("__registerSymbol('$sym', true);");
   }
   @impl_chunks.push("");
 
@@ -126,7 +126,7 @@ sub compile {
 
     # compile implementation
     my $syms_as_js = '"' ~ %patch<syms>.join(" ") ~ '"';
-    @impl_chunks.push("__patch(%patch<host>, $syms_as_js, %patch<impl>);");
+    @impl_chunks.push("__applyPatch(%patch<host>, $syms_as_js, %patch<impl>, true);");
     @impl_chunks.push("");
 
     # compile test
