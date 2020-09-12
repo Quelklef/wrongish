@@ -95,13 +95,15 @@ sub compile {
   @type_chunks.push("}\n");
 
   # typescript unbound declarations
+  @type_chunks.push("export declare const M: typeof_M;\n");
+  @type_chunks.push("interface typeof_M \{");
   for @patches -> %patch {
     for %patch<syms>.Array -> $sym {
-      @type_chunks.push("interface __Unbound \{ $sym%patch<c_tparam_c>\(\n  thisArg: __Default\<%patch<host>%patch<h_tparam_uc>, ThisParameterType\<%patch<type>>>,\n  ...args: Parameters\<%patch<type>>\n  ): ReturnType\<%patch<type>>; }");
+      @type_chunks.push("  $sym%patch<c_tparam_c>\(\n    thisArg: __Default\<%patch<host>%patch<h_tparam_uc>, ThisParameterType\<%patch<type>>>,\n    ...args: Parameters\<%patch<type>>\n  ): ReturnType\<%patch<type>>;");
       @type_chunks.push("");
     }
   }
-  @type_chunks.push("");
+  @type_chunks.push("}\n");
 
   # javascript symbol definitions
   for @all_syms -> $sym {
