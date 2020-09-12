@@ -1,22 +1,14 @@
 
 
-# https://github.com/microsoft/TypeScript/issues/2536#issuecomment-87194347
-my @ts_keywords = <
-  break case catch class const continue debugger default delete do else enum
-  export extends false finally for function if import in instanceof new null
-  return super switch this throw true try typeof var void while with as
-  implements interface let package private protected public static yield
->;
-
 sub getTypeParams($type, $must_be_at_start) {
 
   if $must_be_at_start and not $type.starts-with('<') {
     return ('', '');
   }
-  
+
   my @params = [''];
   my $depth = 0;
-  
+
   my @chars = $type.split('')[1..*-1];
   for @chars.kv -> $idx, $char {
     my $ignore_angles = ($idx > 0 and @chars[$idx - 1] eq '='); # ignore the '>' in fat arrows
@@ -25,14 +17,14 @@ sub getTypeParams($type, $must_be_at_start) {
       $depth--;
       last if $depth == 0;  # stop after one <block>
     }
-    
+
     if $depth == 1 and $char eq ',' {
       @params[*-1] .= trim;
       @params.push('');
     } elsif $depth > 0 {
       @params[*-1] ~= $char
     }
-    
+
     $depth++ if $char eq '<' and not $ignore_angles;
   }
 
@@ -58,22 +50,22 @@ sub compile {
     .grep({ .ends-with(".patch") })
     .map(&parse_patch)
     .sort({ .<host>, .<syms>[0] });
-    
+
   my @all_syms = @patches.flatmap({ .<syms>.Array }).unique;
 
   for @patches -> %patch {
-    
+
     # constrainted/unconstrained type parameters of method
     (%patch<m_tparam_c>, %patch<m_tparam_uc>) = getTypeParams(%patch<type>, True);
-    
+
     # constrainted/unconstrained type parameters of host
     (%patch<h_tparam_c>, %patch<h_tparam_uc>) = getTypeParams(%patch<host>, False);
-    
+
     # combined contrainted type paramters of both host and method type
     %patch<c_tparam_c> = (%patch<m_tparam_c> and %patch<h_tparam_c>)
       ?? (%patch<h_tparam_c>.substr(0, *-1) ~ ', ' ~ %patch<m_tparam_c>.substr(1, *))
       !! (%patch<h_tparam_c> ~ %patch<m_tparam_c>);
-    
+
     # strip type variables from <host> and <type>
     %patch<type> = %patch<type>.substr(%patch<m_tparam_c>.chars);
     %patch<host> = %patch<host>.flip.substr(%patch<h_tparam_c>.chars).flip;
@@ -82,27 +74,29 @@ sub compile {
 
   # typescript symbol declarations
   for @all_syms -> $sym {
-    if @ts_keywords.contains($sym) {
-      @type_chunks.push("export declare const \$$sym: unique symbol;  // typescript keyword");
-    } else {
-      @type_chunks.push("export declare const $sym: unique symbol; export declare const \$$sym: typeof $sym;");
-    }
+    @type_chunks.push("declare const SYM_$sym: unique symbol;");
   }
   @type_chunks.push("");
+
+  # typescript W declarations
+  @type_chunks.push('export declare const W: {');
+  for @all_syms -> $sym {
+    @type_chunks.push("  $sym: typeof SYM_$sym;");
+  }
+  @type_chunks.push("}\n");
 
   # typscript bound declarations
   @type_chunks.push('declare global {');
   for @patches -> %patch {
     for %patch<syms>.Array -> $sym {
-      @type_chunks.push("  export interface %patch<host>%patch<h_tparam_c> \{ [\$$sym]: %patch<m_tparam_c>%patch<type>; \}");
+      @type_chunks.push("  export interface %patch<host>%patch<h_tparam_c> \{ [SYM_$sym]: %patch<m_tparam_c>%patch<type>; \}");
     }
   }
   @type_chunks.push("}\n");
-  
+
   # typescript unbound declarations
   for @patches -> %patch {
     for %patch<syms>.Array -> $sym {
-      @type_chunks.push("interface __Unbound \{ \$$sym: __Unbound['$sym']; }");
       @type_chunks.push("interface __Unbound \{ $sym%patch<c_tparam_c>\(\n  thisArg: __Default\<%patch<host>%patch<h_tparam_uc>, ThisParameterType\<%patch<type>>>,\n  ...args: Parameters\<%patch<type>>\n  ): ReturnType\<%patch<type>>; }");
       @type_chunks.push("");
     }
@@ -145,7 +139,7 @@ sub compile {
   }
 
   # write to file
-  
+
   my $out_dir = "../compiled";
   mkdir($out_dir);
 
@@ -155,12 +149,12 @@ sub compile {
   fill_stub('./wrongish.stub.d.ts'   , $out_dir, @type_chunks.join("\n"));
 
   print("Done\n");
-  
+
 }
 
 sub fill_stub($stub_file, $out_dir, *@patches) {
   my @lines = $stub_file.IO.slurp.split("\n");
-  
+
   my @entrypoints = @lines.grep({ .contains('%ENTRY') }, :k);
   if @entrypoints.elems != @patches.elems {
     die "Stub $stub_file has " ~ @entrypoints.elems ~ " entrypoint(s) but " ~ @patches.elems ~ " patches were provided." }

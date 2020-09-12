@@ -2,8 +2,8 @@
 
 const __ex = module.exports;
 
-// Unbound versions of the impls
-const __unbound = __ex.unbound = {};
+const W = __ex.W = {};
+const M = __ex.M = {};
 
 // Symbols: object, name => symbol
 const __symbols = __ex.__symbols = {};
@@ -13,9 +13,10 @@ const __symbols = __ex.__symbols = {};
 const __patches = __ex.__patches = [];
 
 function __symbol(name) {
-  const symbol = __symbols[name] = __ex[name] = __ex['$' + name] = Symbol(name);
-  __unbound[name] = __unbound['$' + name] = unbound;
-  function unbound(thisArg, ...args) {
+
+  const symbol = __symbols[name] = W[name] = Symbol(name);
+
+  M[name] = function(thisArg, ...args) {
     const host =
       thisArg === null || thisArg === undefined ? Object
       : Object.getPrototypeOf(thisArg).constructor;
@@ -24,6 +25,7 @@ function __symbol(name) {
       throw Error(`Operation [${name}] not supported on type ${host.name}`);
     return impl.apply(thisArg, args);
   }
+
 }
 
 // Apply a patch
@@ -46,7 +48,7 @@ function __patch(host, names, impl) {
 // This is because strict mode allows passing non-object values as the value for 'this',
 // which we need in cases of e.g. calling $some(null)
 // See https://stackoverflow.com/a/38497834/4608364 and https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call#Parameters
-  
+
 // %ENTRY //
-  
+
 })();
