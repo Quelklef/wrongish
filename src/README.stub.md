@@ -50,6 +50,10 @@ arr[WU.sum]()  // 6
 MU.sum(arr)  // 6
 ```
 
+Wrongish will throw an error if you:
+- try to redefine an existing operation; or
+- define an operation that shadows an existing operation (same name, different types, one type is a subtype of the other)
+
 ## Built-In Operations
 
 << %ENTRY >>

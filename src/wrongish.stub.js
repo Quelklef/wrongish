@@ -8,10 +8,6 @@ const __nativeUnbound = __ex.M = {};  // Unbound syntax : name => Function
 const __customSymbols = __ex.WU = {};  // User-defined symbols
 const __customUnbound = __ex.MU = {};  // User-defined unbound syntax
 
-// Patches: list of { host, syms, impl }
-// Used in a test
-const __patches = __ex.__patches = [];
-
 function __registerSymbol(name, native) {
 
   const symbols = native ? __nativeSymbols : __customSymbols;
@@ -33,6 +29,12 @@ function __registerSymbol(name, native) {
 
 }
 
+// Patches: list of { host, syms, impl }
+// This includes both native and custom patches
+// This is used to detect shadowing
+const __patches = __ex.__patches = [];
+
+// Apply a patch to a host
 function __applyPatch(host, names, impl, native) {
 
   const symbols = native ? __nativeSymbols : __customSymbols;
@@ -54,6 +56,12 @@ function __applyPatch(host, names, impl, native) {
 // User-defined operations
 function define(host, name, impl) {
   const sym = __customSymbols[name] || __registerSymbol(name, false);
+
+  if (host.prototype.hasOwnProperty(sym))
+    throw Error(`Cannot redefine operation '${name}': redefinitions are disallowed.`);
+  else if (host.prototype[sym] !== undefined)
+    throw Error(`Cannot define operation '${name}': it already exists on a supertype (shadowing is disallowed).`);
+
   __applyPatch(host, name, impl, false);
 }
 __ex.define = define;  // For some reaosn, Mocha seems to freak the fuck out if this assignment isn't on its own line

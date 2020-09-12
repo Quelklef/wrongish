@@ -52,14 +52,30 @@ describe('wrongish', () => {
     expect(errs).toStrictEqual([]);
   });
 
-  it('allows for user-defined operations', () => {
-    Wrongish.define(Array, 'sum', function(this: Array<number>) {
-      return this.reduce((a, b) => a + b, 0);
+  describe('user-defined operations', () => {
+
+    it('are supported', () => {
+      Wrongish.define(Array, 'sum', function(this: Array<number>) {
+        return this.reduce((a, b) => a + b, 0);
+      });
+
+      const arr = [1, 2, 3];
+      expect((arr as any)[WU.sum]()).toBe(6);
+      expect(MU.sum(arr)).toBe(6);
     });
 
-    const arr = [1, 2, 3];
-    expect((arr as any)[WU.sum]()).toBe(6);
-    expect(MU.sum(arr)).toBe(6);
+    it('shadowing is disallowed', () => {
+      Wrongish.define(Object, 'myshadow', function() { });
+      const addShadowing = () => Wrongish.define(Array, 'myshadow', function() { });
+      expect(addShadowing).toThrow();
+    });
+
+    it('redefinitions are disallowed', () => {
+      const define = () => Wrongish.define(Object, 'myredefine', function() { });
+      define();
+      expect(define).toThrow();
+    });
+
   });
 
   // %ENTRY //
