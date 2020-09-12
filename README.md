@@ -11,7 +11,7 @@ const items = new Set(1, 2, 3);
 items[W.map](x => x * x);  // Set(1, 4, 9)
 ```
 
-## The horror!
+### The horror!
 
 Wrongish works by extending native prototypes, which [is one if the cardinal sins of Javascript programming](https://stackoverflow.com/questions/14034180/why-is-extending-native-objects-a-bad-practice).
 
@@ -20,9 +20,9 @@ However, Wrongish is able to sidestep most of the dangers of extending native pr
 - Namespace conflicts are avoided by having each extension name (e.g. `$map`) be an ES6 `Symbol`
 - All Wrongish extensions are non-enumerable properties, so behaviour of `for in` or `Object.keys` on prototypes will not change
 
-# Reference
+## Syntaxes
 
-**Note**: Wrongish operations support two syntaxes: bound and unbound: Bound syntax uses `W`, for "Wrongish", and unbound uses `M`, an upside-down `W`.
+Wrongish operations support two syntaxes: bound and unbound: Bound syntax uses `W`, for "Wrongish", and unbound uses `M`, an upside-down `W`.
 
 ```js
 const { W, M } = require('wrongish');
@@ -32,9 +32,25 @@ mySet[W.filter](x => x % 2 === 0);
 M.filter(mySet, x => x % 2 === 0);
 ```
 
-Onto the methods!
+## User-Defined Operations
 
-***
+One may define their own operation using `define`. User-defined operations live in the `WU` and `MU` namespaces rather than `W` and `M`:
+
+User-defined operations have poor typescript support.
+
+```js
+const Wrongish = require('wrongish');
+Wrongish.define(Array, 'sum', function() {
+  return this.reduce((a, b) => a + b, 0);
+});
+
+const { WU, MU } = Wrongish;
+const arr = [1, 2, 3];
+arr[WU.sum]()  // 6
+MU.sum(arr)  // 6
+```
+
+## Built-In Operations
 
 ### `Array#[filterIsA, filterIsAn, filterIs, filterOf, filterInstanceOf, filterTypeof]`
 

@@ -1,7 +1,7 @@
 
 import './wrongish';
 import * as Wrongish from './wrongish';
-const { W, M } = Wrongish;
+const { W, M, WU, MU } = Wrongish;
 
 import expect from 'expect';
 
@@ -52,9 +52,17 @@ describe('wrongish', () => {
     expect(errs).toStrictEqual([]);
   });
 
+  it('allows for user-defined operations', () => {
+    Wrongish.define(Array, 'sum', function(this: Array<number>) {
+      return this.reduce((a, b) => a + b, 0);
+    });
+
+    const arr = [1, 2, 3];
+    expect((arr as any)[WU.sum]()).toBe(6);
+    expect(MU.sum(arr)).toBe(6);
+  });
+
   // %ENTRY //
 
 });
-
-
 
