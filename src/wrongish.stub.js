@@ -6,7 +6,7 @@ const W = __ex.W = {};
 const M = __ex.M = {};
 
 // Symbols: object, name => symbol
-const __symbols = __ex.__symbols = {};
+const __symbols = {};
 
 // Patches: list of { host, syms, impl }
 // Used in a test
@@ -42,6 +42,7 @@ function __patch(host, names, impl) {
 }
 
 
+// Patches
 (function() {
 'use strict';
 // Strict mode is ABSOLUTELY REQUIRED at this point
