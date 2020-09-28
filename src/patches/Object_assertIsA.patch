@@ -1,0 +1,41 @@
+::host Object
+::type <K>(kind: K) => K extends { new(...args: any): any } ? InstanceType<K> : K extends 'string' ? string : K extends 'number' ? number : K extends 'bigint' ? bigint : K extends 'boolean' ? boolean : K extends 'symbol' ? symbol : never
+::syms assertIsA assertIsAn assertIs assertOf assertInstanceOf assertTypeof
+
+::docn
+Given a value and a type (either a constructor function or one of `'string'`, `'number'`, `'bigint`', `'boolean'`, or `'symbol'`), asserts that the value is of the given type, and then returns the value. If the value is of a different type, throws an error.
+
+::impl
+function(kind) {
+  if (kind instanceof Function && this instanceof kind || typeof this === kind)
+    return this;
+
+  const primitiveTypes = ['string', 'number', 'bigint', 'boolean', 'symbol'];
+  if (typeof kind === 'string' && !primitiveTypes.includes(kind))
+    throw Error(`Invalid primitive type '${kind}'`);
+
+  const kindName = typeof kind === 'string' ? kind : kind.name;
+  throw new Error(`Given value '${this.toString()}' is not a(n) '${kindName}'`);
+}
+
+::test
+
+const sym = Symbol('ok');
+const Str = new String('abc');
+const Num = new Number(123);
+const str = 'string';
+const num = 12;
+const bigint = BigInt(12);
+const bool = true;
+
+expect(sym[W.assertIsA]('symbol')).toBe(sym);
+expect(Str[W.assertIsA](String)).toBe(Str);
+expect(Num[W.assertIsA](Number)).toBe(Num);
+expect(str[W.assertIsA]('string')).toBe(str);
+expect(num[W.assertIsA]('number')).toBe(num);
+expect(bigint[W.assertIsA]('bigint')).toBe(bigint);
+expect(bool[W.assertIsA]('boolean')).toBe(bool);
+
+expect(() => sym[W.assertIsA]('number')).toThrow();
+expect(() => Num[W.assertIsA]('number')).toThrow();
+expect(() => num[W.assertIsA](Number)).toThrow();
