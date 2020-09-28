@@ -235,7 +235,7 @@ If the supplied value is `null` or `undefined`, throw an error. Else, return the
 
 ### `Object#[assertIsA, assertIsAn, assertIs, assertOf, assertInstanceOf, assertTypeof]`
 
-- type: `Object[assertIsA]: <K>(kind: K) => K extends { new(...args: any): any } ? InstanceType<K> : K extends 'string' ? string : K extends 'number' ? number : K extends 'bigint' ? bigint : K extends 'boolean' ? boolean : K extends 'symbol' ? symbol : never`
+- type: `Object[assertIsA]: <T, K>(this: T, kind: K) => K extends { new(...args: any): any } ? InstanceType<K> : K extends 'string' ? string : K extends 'number' ? number : K extends 'bigint' ? bigint : K extends 'boolean' ? boolean : K extends 'symbol' ? symbol : never`
 
 Given a value and a type (either a constructor function or one of `'string'`, `'number'`, `'bigint`', `'boolean'`, or `'symbol'`), asserts that the value is of the given type, and then returns the value. If the value is of a different type, throws an error.
 

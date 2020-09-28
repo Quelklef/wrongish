@@ -1,5 +1,5 @@
 ::host Object
-::type <K>(kind: K) => K extends { new(...args: any): any } ? InstanceType<K> : K extends 'string' ? string : K extends 'number' ? number : K extends 'bigint' ? bigint : K extends 'boolean' ? boolean : K extends 'symbol' ? symbol : never
+::type <T, K>(this: T, kind: K) => K extends { new(...args: any): any } ? InstanceType<K> : K extends 'string' ? string : K extends 'number' ? number : K extends 'bigint' ? bigint : K extends 'boolean' ? boolean : K extends 'symbol' ? symbol : never
 ::syms assertIsA assertIsAn assertIs assertOf assertInstanceOf assertTypeof
 
 ::docn
@@ -39,3 +39,6 @@ expect(bool[W.assertIsA]('boolean')).toBe(bool);
 expect(() => sym[W.assertIsA]('number')).toThrow();
 expect(() => Num[W.assertIsA]('number')).toThrow();
 expect(() => num[W.assertIsA](Number)).toThrow();
+
+// Ensure that typescript lets us use it on non-Object types
+() => M.assertIsA(null, String);
