@@ -1,0 +1,29 @@
+::host Array<T>
+::type () => Array<T>
+::syms duplicates dupes
+
+::docn
+Return a set of all duplicates in the array.
+
+```js
+const letters = Array.from('Mississippi');
+const dupes = letters[W.duplicates]();
+console.log(dupes); // Set(3) { 's', 'i', 'p' }
+```
+
+::impl
+function() {
+  const seen = new Set();
+  const duplicates = new Set();
+  for (const elem of this) {
+    if (seen.has(elem))
+      duplicates.add(elem);
+    seen.add(elem);
+  }
+  return duplicates;
+}
+
+::test
+const letters = Array.from('Mississippi');
+const dupes = letters[W.duplicates]();
+expect(dupes).toEqual(new Set(['s', 'i', 'p']));

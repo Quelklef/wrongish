@@ -56,6 +56,18 @@ Wrongish will throw an error if you:
 
 ## Built-In Operations
 
+### `Array#[duplicates, dupes]`
+
+- type: `Array<T>[duplicates]: () => Array<T>`
+
+Return a set of all duplicates in the array.
+
+```js
+const letters = Array.from('Mississippi');
+const dupes = letters[W.duplicates]();
+console.log(dupes); // Set(3) { 's', 'i', 'p' }
+```
+
 ### `Array#[filter2]`
 
 - type: `Array<T>[filter2]: <R extends T>(predicate: (item: T) => item is R) => Array<R>`
