@@ -56,6 +56,16 @@ Wrongish will throw an error if you:
 
 ## Built-In Operations
 
+### `Array#[filter2]`
+
+- type: `Array<T>[filter2]: <R extends T>(predicate: (item: T) => item is R) => Array<R>`
+
+Identical to `Array#filter` in every way except for its type.
+
+While `Array<T>#filter` has the return type `Array<T>`, `Array<T>#[filter2]` expresses within the type that the elements have passed the predicate, returning an `Array<R>`.
+
+**Note**: The choice of the name `filter2` is intentionally obtuse in order not to suggest different semantics from `Array#filter`, which a more meaingful name like `filterAndRefine` may have done. If you feel there is a better name for `includes2`, please let me know.
+
 ### `Array#[filterIsA, filterIsAn, filterIs, filterOf, filterInstanceOf, filterTypeof]`
 
 - type: `Array<T>[filterIsA]: <K>(kind: K) => K extends { new(...args: any): any } ? InstanceType<K>[] : K extends 'string' ? string[] : K extends 'number' ? number[] : K extends 'bigint' ? bigint[] : K extends 'boolean' ? boolean[] : K extends 'symbol' ? symbol[] : never`
