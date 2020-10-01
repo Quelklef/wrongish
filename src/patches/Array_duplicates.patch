@@ -1,5 +1,5 @@
 ::host Array<T>
-::type () => Array<T>
+::type () => Set<T>
 ::syms duplicates dupes
 
 ::docn

@@ -58,7 +58,7 @@ Wrongish will throw an error if you:
 
 ### `Array#[duplicates, dupes]`
 
-- type: `Array<T>[duplicates]: () => Array<T>`
+- type: `Array<T>[duplicates]: () => Set<T>`
 
 Return a set of all duplicates in the array.
 
