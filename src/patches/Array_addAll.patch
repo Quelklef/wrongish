@@ -1,0 +1,18 @@
+::host Array<T>
+::type (items: Iterable<T>) => void
+::syms addAll
+
+::docn
+Pushes all the items from the given iterable into the arrary.
+
+The statement `array[W.addAll](iterable)` is equivalent to `array.push(...iterable)`.
+
+::impl
+function(items) {
+  this.push(...items);
+}
+
+::test
+const nums = [1, 2, 3];
+nums[W.addAll]([4, 5, 6]);
+expect(nums).toEqual([1, 2, 3, 4, 5, 6]);

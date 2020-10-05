@@ -56,6 +56,14 @@ Wrongish will throw an error if you:
 
 ## Built-In Operations
 
+### `Array#[addAll]`
+
+- type: `Array<T>[addAll]: (items: Iterable<T>) => void`
+
+Pushes all the items from the given iterable into the arrary.
+
+The statement `array[W.addAll](iterable)` is equivalent to `array.push(...iterable)`.
+
 ### `Array#[duplicates, dupes]`
 
 - type: `Array<T>[duplicates]: () => Set<T>`
@@ -300,6 +308,14 @@ console.log(uniq);  // [1, 2, 3]
 ```
 
 ***
+
+### `Set#[addAll]`
+
+- type: `Set<T>[addAll]: (items: Iterable<T>) => void`
+
+Adds all the items from the given iterable into the set.
+
+Like `Array#[addAll]`, but for `Set`s.
 
 ### `Set#[every, all]`
 

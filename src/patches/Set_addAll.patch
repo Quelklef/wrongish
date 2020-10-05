@@ -1,0 +1,19 @@
+::host Set<T>
+::type (items: Iterable<T>) => void
+::syms addAll
+
+::docn
+Adds all the items from the given iterable into the set.
+
+Like `Array#[addAll]`, but for `Set`s.
+
+::impl
+function(items) {
+  for (const item of items)
+    this.add(item);
+}
+
+::test
+const nums = new Set([1, 2, 3]);
+nums[W.addAll]([3, 4, 5, 6]);
+expect(nums).toEqual(new Set([1, 2, 3, 4, 5, 6]));
