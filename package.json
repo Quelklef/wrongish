@@ -1,6 +1,6 @@
 {
   "name": "wrongish",
-  "version": "0.23.0",
+  "version": "0.24.0",
   "description": "A naughty utility library",
   "main": "compiled/wrongish.js",
   "types": "compiled/wrongish.d.ts",

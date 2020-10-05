@@ -313,6 +313,12 @@ Like `Array#every`, but for `Set`.
 
 Like `Array#filter`, but for `Set`.
 
+### `Set#[flatMap]`
+
+- type: `Set<T>[flatMap]: <S>(mapper: (item: T) => Iterable<S>) => Set<S>`
+
+Like `Array#flatMap`, but for `Set`
+
 ### `Set#[has2]`
 
 - type: `Set<T>[has2]: (item: any) => item is T`
